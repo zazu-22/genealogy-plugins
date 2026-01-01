@@ -201,6 +201,33 @@ Source: "1900 U.S. Census"
   └── Citation: "Page 45, Line 1, William Brown household"
 ```
 
+### GEDCOM Field Mapping (Source-Level)
+
+| GEDCOM Field | Gramps Target | Format/Notes |
+|--------------|---------------|--------------|
+| `TITL` | `stitle` | Source title - direct mapping |
+| `AUTH` | `sauthor` | Author/creator name |
+| `PUBL` | `spubinfo` | Publisher and publication details |
+| `TYPE` | `srcattribute TYPE` | Source type classification |
+| `REFN` | `srcattribute REFN` | Reference/catalog numbers |
+| `REPO` | `reporef` | Repository reference |
+| `INTV` | `sauthor` | Interviewer = author for oral histories |
+
+### Compound Field Formatting
+
+**Newspapers/Periodicals** (PERI + PLAC + DATE + PAGE → spubinfo):
+```
+[Newspaper Name] ([City], [State]), [Date], p. [Page]
+Example: The Times Recorder (Zanesville, Ohio), 14 Jun 1948, p. 7
+```
+
+**Digital Access** (URL + DATV → note):
+```
+Digital access: [Website] ([URL] : accessed [Date])
+```
+
+See `docs/gedcom-gramps-field-mapping.md` for complete guidance.
+
 ## Citation
 
 Specific reference to a source for a particular fact.
@@ -215,14 +242,40 @@ Specific reference to a source for a particular fact.
 | date | Date accessed or publication date |
 | confidence | Quality rating (0-4) |
 
+### GEDCOM Field Mapping (Citation-Level)
+
+| GEDCOM Field | Gramps Target | Format/Notes |
+|--------------|---------------|--------------|
+| `TEXT` | Parse → `citation.page` | Extract enumeration details, cert numbers |
+| `FILN` | `citation.page` | Certificate/file number: `certificate no. [FILN]` |
+| `DETA` | Parse → `citation.page` | Roll/page/ED details |
+| `PAGE` | `citation.page` or `spubinfo` | Depends on source type |
+
+### Citation Page Formats by Source Type
+
+**Census Records**:
+```
+[State], [County], [Township], ED [X-Y], Sheet [Z], Line [L], Dwelling [D], Family [F]
+```
+
+**Vital Records**:
+```
+certificate no. [number]
+```
+
+**Find A Grave**:
+```
+memorial [number] for [Name], [Cemetery]
+```
+
 ### Confidence Levels
 | Value | Level | Use When |
 |-------|-------|----------|
-| 0 | Very Low | Questionable source |
-| 1 | Low | Secondary source, possible errors |
-| 2 | Normal | Typical reliable source (default) |
-| 3 | High | Primary source, firsthand knowledge |
-| 4 | Very High | Original record, direct evidence |
+| 0 | Very Low | Questionable, unverified, or user-submitted |
+| 1 | Low | Derivative with potential errors |
+| 2 | Normal | Derivative source, consistent with others (default) |
+| 3 | High | Original record, indirect evidence |
+| 4 | Very High | Original record, direct evidence, firsthand knowledge |
 
 ## Repository
 
@@ -266,6 +319,29 @@ Text annotations attached to any object.
 - `Transcript` - Document transcriptions
 - `Source text` - Quoted source content
 - `Citation` - Citation-specific notes
+
+### Notes vs Attributes for GEDCOM Export
+
+**Prefer Notes** for:
+- URLs and web addresses
+- Access dates and digital provenance
+- Location information
+- Any data you want to be searchable
+
+**Rationale** (per Gramps community):
+- Notes are searchable via Gramps filters
+- Source/Citation Attributes have **no GEDCOM equivalent** and won't export
+- URLs change; notes allow context and explanation
+
+**Use Attributes** for:
+- Structured, typed data (e.g., TYPE, REFN)
+- Data that benefits from key-value organization
+- Internal categorization not needed in exports
+
+**Digital Access Note Format**:
+```
+Digital access: [Website] ([URL] : accessed [Date])
+```
 
 ## Media
 

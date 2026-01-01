@@ -348,8 +348,67 @@ Evidence Explained's layered citation approach maps directly to Gramps:
 | Publication info | Source `spubinfo` | Washington, D.C.: NARA |
 | Specific reference | Citation `page` | Ohio, Muskingum, ED 73, Sheet 11A |
 | Repository | Source `reporef` | National Archives |
-| Access date | Citation attribute | 15 January 2024 |
+| Access date | Source/Citation `note` | Use notes, not attributes |
 | Confidence | Citation `confidence` | 3 (High) |
+
+### Complete GEDCOM Field Mapping
+
+#### Source-Level Fields
+
+| GEDCOM Field | Gramps Target | Format/Notes |
+|--------------|---------------|--------------|
+| `TITL` | `stitle` | Source title - direct mapping |
+| `AUTH` | `sauthor` | Author/creator name |
+| `PUBL` | `spubinfo` | Publisher and publication details |
+| `TYPE` | `srcattribute TYPE` | Source type classification |
+| `REFN` | `srcattribute REFN` | Reference/catalog numbers |
+| `REPO` | `reporef` | Repository reference |
+| `INTV` | `sauthor` | Interviewer = author for oral histories |
+
+#### Citation-Level Fields
+
+| GEDCOM Field | Gramps Target | Format/Notes |
+|--------------|---------------|--------------|
+| `TEXT` | Parse → `citation.page` | Extract enumeration details, cert numbers |
+| `FILN` | `citation.page` | `certificate no. [FILN]` |
+| `DETA` | Parse → `citation.page` | Roll/page/ED details |
+| `PAGE` | `citation.page` or `spubinfo` | Depends on source type |
+
+#### Compound Fields (Require Formatting)
+
+| GEDCOM Fields | Gramps Target | Format Pattern |
+|---------------|---------------|----------------|
+| `PERI` + `PLAC` + `DATE` + `PAGE` | `spubinfo` | `[PERI] ([PLAC]), [DATE], p. [PAGE]` |
+| `INTV` | `sauthor` | Interviewer = author for oral histories |
+| `LOCA` + `DATV` | `note` | `Digital access: [LOCA] (accessed [DATV])` |
+| `URL` + `DATV` | `note` | `Digital access: [URL] (accessed [DATV])` |
+
+### Notes vs Attributes
+
+**IMPORTANT**: Per Gramps community best practices:
+
+**Prefer Notes** for:
+- URLs and web addresses
+- Access dates and digital provenance
+- Location information
+- Any data you want to be searchable
+
+**Rationale**:
+- Notes are searchable via Gramps filters
+- Source/Citation Attributes have **no GEDCOM equivalent** and won't export
+- URLs change; notes allow context and explanation
+
+**Use Attributes** only for:
+- Structured, typed data (e.g., TYPE, REFN)
+- Data that benefits from key-value organization
+- Internal categorization not needed in exports
+
+**Digital Access Note Format**:
+```
+Digital access: [Website] ([URL] : accessed [Date])
+```
+
+See `docs/gedcom-gramps-field-mapping.md` for complete guidance and implementation patterns
 
 ### Consolidation Decision Framework
 

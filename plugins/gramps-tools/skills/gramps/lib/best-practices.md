@@ -167,10 +167,38 @@ Volume 12, Page 345
 - 0 (Very Low): Questionable or unsupported
 
 **Access Information**:
-Use attributes to record:
-- Date Accessed
-- URL (for online sources)
-- Repository call number
+
+**IMPORTANT: Use Notes, Not Attributes** for digital access information:
+
+Per Gramps community best practices, prefer Notes over Attributes for:
+- URLs and web addresses
+- Access dates and digital provenance
+- Location information
+
+**Rationale**:
+- Notes are searchable via Gramps filters
+- Source/Citation Attributes have **no GEDCOM equivalent** and won't export
+- URLs change; notes allow context (e.g., "previously at...")
+- Best practice: "Record your references in a way that will still be relevant in many years. URLs are useful now but don't last."
+
+**Use Attributes** only for:
+- Structured, typed data (e.g., TYPE, REFN)
+- Data that benefits from key-value organization
+- Internal categorization not needed in GEDCOM exports
+
+**Digital Access Note Format**:
+```
+Digital access: [Website] ([URL] : accessed [Date])
+```
+
+**Examples**:
+```
+Digital access: Newspapers.com (http://www.newspapers.com/image/19309759/ : accessed 23 Jun 2014)
+
+Digital access: FamilySearch (https://www.familysearch.org/ark:/61903/1:1:ABCD-1234 : accessed 15 Jan 2024)
+```
+
+See `docs/gedcom-gramps-field-mapping.md` for complete GEDCOM-Gramps field mapping guidance
 
 ## Relationship Recording
 

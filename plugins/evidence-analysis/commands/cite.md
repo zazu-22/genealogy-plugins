@@ -83,10 +83,27 @@ citing [original source if known].
 - **Information Type:** [Primary/Secondary/Indeterminate]
 
 ## For Gramps
-- **Source Title:** [title for source record]
-- **Citation Detail:** [page/entry specifics]
-- **Repository:** [repository name]
+
+### Source-Level Fields
+| Field | Value |
+|-------|-------|
+| **Source Title (`stitle`):** | [title for source record] |
+| **Author (`sauthor`):** | [author/creator] |
+| **Publication Info (`spubinfo`):** | [publisher, location, date] |
+| **Repository:** | [repository name] |
+
+### Citation-Level Fields
+| Field | Value |
+|-------|-------|
+| **Page (`citation.page`):** | [page/entry specifics] |
+| **Confidence:** | [0-4 rating] |
+
+### Digital Access Note
 ```
+Digital access: [Website] ([URL] : accessed [Date])
+```
+
+**Important**: Use Notes, not Attributes, for digital access info - Attributes don't export to GEDCOM.
 
 ## Tips
 
@@ -94,3 +111,5 @@ citing [original source if known].
 - Always note access date for online sources
 - Distinguish between the record and its image
 - Layer citations for derivative sources (image of microfilm of original)
+- Use Notes for URLs/access dates (they export to GEDCOM; Attributes don't)
+- See `docs/gedcom-gramps-field-mapping.md` for complete field mapping guidance

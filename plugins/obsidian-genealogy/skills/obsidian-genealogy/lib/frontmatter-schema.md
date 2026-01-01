@@ -57,13 +57,18 @@ repository: "[[National Archives]]"
 repository_location: "Washington, D.C."
 call_number: "NARA M432, Roll 123"
 
-# Citation components
+# Gramps/GEDCOM field mappings
+stitle: "1850 U.S. Census"              # GEDCOM TITL → Gramps source title
+sauthor: "U.S. Bureau of the Census"    # GEDCOM AUTH → Gramps author
+spubinfo: "Washington, D.C.: NARA"      # GEDCOM PUBL → Gramps publication info
+
+# Legacy fields (alternative to stitle/sauthor/spubinfo)
 title: "1850 U.S. Census"
 creator: "U.S. Bureau of the Census"
 publication_date: 1850
 jurisdiction: "Muskingum County, Ohio"
 
-# Access information
+# Access information (use for notes, not attributes in Gramps)
 access_date: 2024-01-15
 access_method: digital | microfilm | original
 url: "https://www.ancestry.com/..."
@@ -73,8 +78,28 @@ citing: "NARA microfilm M432, roll 123"
 originality: original | derivative
 informativeness: primary | secondary | indeterminate
 reliability: high | medium | low
+
+# Consolidation guidance
+consolidate: true | false    # true for census, Find A Grave, SSDI; false for newspapers, books
 ---
 ```
+
+### GEDCOM-Gramps Field Mapping Reference
+
+| GEDCOM Field | Gramps Target | Frontmatter Key |
+|--------------|---------------|-----------------|
+| `TITL` | `stitle` | `stitle` or `title` |
+| `AUTH` | `sauthor` | `sauthor` or `creator` |
+| `PUBL` | `spubinfo` | `spubinfo` |
+| `TYPE` | Source attribute | `source_type` |
+| `REPO` | Repository ref | `repository` |
+
+**Important**: When syncing to Gramps:
+- Digital access info (URL, access_date) should become **Notes**, not Attributes
+- Source Attributes don't export to GEDCOM
+- Use the `digital_access` note format: `Digital access: [Website] ([URL] : accessed [Date])`
+
+See `docs/gedcom-gramps-field-mapping.md` for complete guidance.
 
 ## Place Note Schema
 

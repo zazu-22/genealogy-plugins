@@ -288,10 +288,39 @@ post by [username], [date of post].
 - Website consultations
 - Online images
 
-**Format**:
+**Evidence Explained Format**:
 ```
 (https://www.example.com : accessed 15 January 2024)
 ```
+
+### Digital Access in Gramps
+
+**IMPORTANT: Use Notes, Not Attributes** for digital access information.
+
+Per Gramps community best practices:
+- Source/Citation Attributes have **no GEDCOM equivalent** and won't export
+- Notes are searchable via Gramps filters
+- URLs change; notes allow context (e.g., "previously at...")
+
+**Gramps Note Format**:
+```
+Digital access: [Website] ([URL] : accessed [Date])
+```
+
+**Examples**:
+```
+Digital access: Newspapers.com (http://www.newspapers.com/image/19309759/ : accessed 23 Jun 2014)
+
+Digital access: FamilySearch (https://www.familysearch.org/ark:/61903/1:1:ABCD-1234 : accessed 15 Jan 2024)
+
+Digital access: Ancestry.com (https://www.ancestry.com/discoveryui-content/view/12345:1234 : accessed 10 Mar 2024)
+```
+
+**Attach Note To**:
+- Citation: When the access info is specific to that citation
+- Source: When the entire source is digital and one access point serves all citations
+
+See `docs/gedcom-gramps-field-mapping.md` for complete GEDCOM-Gramps field mapping guidance
 
 ### URL Best Practices
 
