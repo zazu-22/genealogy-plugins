@@ -16,7 +16,12 @@ Synchronize data from Gramps XML export to Obsidian person notes.
 
 ## Instructions
 
-1. **Load the `obsidian-genealogy` skill** and `gramps` skill
+1. **Load the `obsidian-genealogy` skill**. If the `gramps` skill is available (from gramps-tools plugin), load it too. Otherwise, use this essential Gramps XML context:
+   - Gramps XML uses `<person>`, `<family>`, `<event>` elements
+   - Each person has a unique `handle` attribute and human-readable `id` (e.g., "I0001")
+   - Names are in `<name><first>` and `<name><surname>` elements
+   - Events link to persons via `<eventref>` with `hlink` to event handle
+   - Birth/death are event types within `<event type="Birth">` etc.
 
 2. **Read Gramps export**:
    - Location: `~/Genealogy/git-exports/family-tree.gramps`
