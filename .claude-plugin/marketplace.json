@@ -1,26 +1,31 @@
 {
   "name": "genealogy-plugins",
-  "description": "Genealogy research plugins for Gramps, Evidence Explained, GPS methodology, and Obsidian integration",
-  "version": "0.1.0",
+  "owner": {
+    "name": "zazu-22"
+  },
+  "metadata": {
+    "description": "Genealogy research plugins for Gramps, Evidence Explained, GPS methodology, and Obsidian integration",
+    "version": "0.1.0"
+  },
   "plugins": [
     {
       "name": "gramps-tools",
-      "path": "./plugins/gramps-tools",
+      "source": "./plugins/gramps-tools",
       "description": "Tree maintenance, backups, data quality audits, sync verification"
     },
     {
       "name": "research-workflow",
-      "path": "./plugins/research-workflow",
+      "source": "./plugins/research-workflow",
       "description": "Structured research sessions, planning, progress tracking with project registry"
     },
     {
       "name": "evidence-analysis",
-      "path": "./plugins/evidence-analysis",
+      "source": "./plugins/evidence-analysis",
       "description": "Source analysis, GPS-compliant proof building, citation generation"
     },
     {
       "name": "obsidian-genealogy",
-      "path": "./plugins/obsidian-genealogy",
+      "source": "./plugins/obsidian-genealogy",
       "description": "Obsidian vault integration for genealogy research notes"
     }
   ]
