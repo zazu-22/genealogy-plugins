@@ -16,6 +16,7 @@ Run a data quality audit on the Gramps family tree to identify issues.
 | `citations` | Find events/facts without source citations |
 | `dates` | Find invalid or inconsistent dates |
 | `completeness` | Assess overall data completeness |
+| `gedcom-gaps` | Find citations with empty page when GEDCOM source has DETA/FILN/LOCA |
 
 ## Instructions
 
@@ -51,6 +52,33 @@ Run a data quality audit on the Gramps family tree to identify issues.
 - Calculate percentage of persons with death dates (for deceased)
 - Calculate citation coverage for events
 - Identify major data gaps
+
+### GEDCOM Gaps Audit
+
+**Purpose**: Identify citations where Gramps `citation.page` is empty but the original GEDCOM source contains extractable data in DETA, FILN, or LOCA fields.
+
+**Requirements**:
+- Gramps XML export at `~/Genealogy/git-exports/family-tree.gramps`
+- Original GEDCOM file (user must provide path)
+
+**Process**:
+1. Parse Gramps XML to find citations with empty or minimal `page` attribute
+2. Parse original GEDCOM to extract source records
+3. Map Gramps sources to GEDCOM sources via title matching
+4. For each citation with empty page:
+   - Check if corresponding GEDCOM source has DETA, FILN, or LOCA data
+   - If data exists, report as "recoverable citation data"
+
+**Check priority order** (per `docs/gedcom-gramps-field-mapping.md`):
+1. DETA - Most specific enumeration details
+2. FILN - Certificate/file numbers
+3. LOCA - Only if contains citation-level refs (microfilm, FHL)
+
+**Report includes**:
+- Count of citations with recoverable data
+- Breakdown by field type (DETA vs FILN vs LOCA)
+- List of affected sources with sample extractable data
+- Recommended extraction approach
 
 ## Output Format
 

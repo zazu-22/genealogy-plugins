@@ -105,6 +105,19 @@ Digital access: [Website] ([URL] : accessed [Date])
 
 **Important**: Use Notes, not Attributes, for digital access info - Attributes don't export to GEDCOM.
 
+## GEDCOM Import Note
+
+When generating citations from GEDCOM data, check **ALL** data fields in priority order:
+
+1. **DETA** - Most specific enumeration details (Roll/Page/ED)
+2. **FILN** - Certificate or file numbers
+3. **TEXT** - Database citations (often generic descriptions)
+4. **LOCA** - Only if contains citation-level refs (microfilm, FHL numbers)
+
+**Why this order matters**: DETA often contains more specific data than TEXT. Many Ancestry exports put generic database descriptions in TEXT while the actual enumeration details are in DETA.
+
+See `docs/gedcom-gramps-field-mapping.md` for complete extraction patterns and code examples.
+
 ## Tips
 
 - When in doubt, include more information

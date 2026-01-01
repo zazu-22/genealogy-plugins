@@ -74,6 +74,59 @@ This document provides authoritative guidance for mapping GEDCOM source/citation
 
 ---
 
+## Citation Data Extraction Priority
+
+**CRITICAL**: Citation-level data can exist in multiple GEDCOM fields, not just TEXT. When extracting citation page data, check fields in this priority order:
+
+| Priority | Field | Rationale |
+|----------|-------|-----------|
+| 1 | `DETA` | Most specific enumeration details (Roll/Page/ED) |
+| 2 | `FILN` | Certificate or file numbers |
+| 3 | `TEXT` | Database citations (often generic) |
+| 4 | `LOCA` | Only if contains citation-level refs (microfilm, FHL) |
+
+### Why DETA Before TEXT?
+
+Many GEDCOM exports (especially from Ancestry) put **generic database descriptions** in TEXT while **specific enumeration details** appear in DETA:
+
+**TEXT** (generic):
+```
+Ancestry.com. 1920 United States Federal Census [database on-line].
+Provo, UT, USA: Ancestry.com Operations Inc, 2010.
+```
+
+**DETA** (specific):
+```
+Roll: T624_453; Page: 13A; Enumeration District: 0171
+```
+
+If you only process TEXT, you miss the actual citation details in DETA.
+
+### LOCA as Citation-Level Data
+
+The LOCA field can contain two types of information:
+
+| Type | Examples | Target |
+|------|----------|--------|
+| **Repository description** | "Family History Library", "National Archives" | `reporef` |
+| **Citation-level reference** | "FHL microfilm: 1374466", "NARA microfilm M593" | `citation.page` |
+
+**Distinguishing Patterns**:
+```python
+def is_citation_level_loca(loca: str) -> bool:
+    """Returns True if LOCA contains citation-level refs, not just repository info."""
+    loca_lower = loca.lower()
+    return any([
+        'microfilm' in loca_lower,
+        'microfiche' in loca_lower,
+        'fhl' in loca_lower,
+        'nara' in loca_lower and ('m' in loca_lower or 't' in loca_lower),  # M593, T625
+        loca.startswith('http') and '/record/' in loca,  # Specific record URLs
+    ])
+```
+
+---
+
 ## Source Type Specific Patterns
 
 ### 1. Newspaper/Periodical Articles
@@ -305,7 +358,131 @@ Map source quality to Gramps confidence:
 
 ---
 
+## CRITICAL: Process All Sources
+
+A common mistake is to only extract citation data from **consolidated sources** while ignoring **surviving (1:1) sources**. This is incorrect.
+
+### The Distinction
+
+| Term | Meaning | Example |
+|------|---------|---------|
+| **Consolidated** | Multiple GEDCOM sources merged into one Gramps source | All census entries → one "1920 U.S. Census" source |
+| **Surviving** | GEDCOM source maps 1:1 to Gramps source | Individual vital record keeps its own source |
+
+### The Mistake
+
+```python
+# WRONG: Only process consolidated sources
+for source in sources:
+    if source.mapping_type == 'consolidated':
+        extract_citation_data(source)
+```
+
+This assumes surviving sources don't need citation-level extraction. **Wrong.** Surviving sources often have DETA/FILN data that should become `citation.page`.
+
+### The Correct Approach
+
+```python
+# CORRECT: Process ALL sources with citations needing page data
+for source in sources:
+    for citation in source.citations:
+        if not citation.page:
+            citation.page = extract_citation_page(source.gedcom_data)
+```
+
+The consolidated/surviving distinction describes **source relationships**, not **which fields have extractable data**. Both types can have DETA, FILN, or LOCA containing citation-level information.
+
+---
+
 ## Implementation Notes for Plugin Developers
+
+### Extracting Citation Page Data (Priority Order)
+
+Use this function to extract citation page data from GEDCOM fields in the correct priority order:
+
+```python
+def extract_citation_page(gedcom_data) -> str | None:
+    """Extract citation page data from GEDCOM fields in priority order."""
+
+    # 1. DETA first (most specific enumeration details)
+    if gedcom_data.deta:
+        result = extract_from_deta(gedcom_data.deta)
+        if result:
+            return result
+
+    # 2. FILN (certificate/file numbers)
+    if gedcom_data.filn:
+        result = format_filn(gedcom_data.filn)
+        if result:
+            return result
+
+    # 3. TEXT (database citations)
+    if gedcom_data.text:
+        result = extract_from_text(gedcom_data.text)
+        if result:
+            return result
+
+    # 4. LOCA (only if contains citation-level refs)
+    if gedcom_data.loca and is_citation_level_loca(gedcom_data.loca):
+        result = extract_from_loca(gedcom_data.loca)
+        if result:
+            return result
+
+    return None
+
+
+def extract_from_deta(deta: str) -> str | None:
+    """Extract enumeration details from DETA field."""
+    parts = []
+
+    # Parse key-value pairs like "Roll: T624_453; Page: 13A; Enumeration District: 0171"
+    roll_match = re.search(r'[Rr]oll[:\s]+([A-Z]?\d+[-_]?\d*)', deta)
+    page_match = re.search(r'[Pp]age[:\s]+(\d+[AB]?)', deta)
+    ed_match = re.search(r'(?:Enumeration District|ED)[:\s]+(\d+[-\d]*)', deta)
+
+    if roll_match:
+        parts.append(f"Roll {roll_match.group(1)}")
+    if page_match:
+        parts.append(f"Page {page_match.group(1)}")
+    if ed_match:
+        parts.append(f"ED {ed_match.group(1)}")
+
+    return "; ".join(parts) if parts else None
+
+
+def format_filn(filn: str) -> str:
+    """Format FILN field as citation page reference."""
+    filn = filn.strip()
+
+    # If already formatted, return as-is
+    if filn.lower().startswith('certificate') or filn.lower().startswith('page'):
+        return filn
+
+    # Check if it looks like a certificate number
+    if re.match(r'^[#]?\d+$', filn):
+        return f"certificate no. {filn.lstrip('#')}"
+
+    # Check for volume/page patterns
+    if re.search(r'vol|page|p\.|no\.', filn, re.IGNORECASE):
+        return filn
+
+    return filn
+
+
+def extract_from_loca(loca: str) -> str | None:
+    """Extract citation-level reference from LOCA field."""
+    # Extract microfilm numbers
+    microfilm_match = re.search(r'(?:FHL\s+)?microfilm[:\s]+(\d+)', loca, re.IGNORECASE)
+    if microfilm_match:
+        return f"FHL microfilm {microfilm_match.group(1)}"
+
+    # Extract NARA publication references
+    nara_match = re.search(r'NARA\s+(?:microfilm\s+)?(?:publication\s+)?([MT]\d+)', loca, re.IGNORECASE)
+    if nara_match:
+        return f"NARA microfilm {nara_match.group(1)}"
+
+    return None
+```
 
 ### Parsing GEDCOM TEXT Fields
 
