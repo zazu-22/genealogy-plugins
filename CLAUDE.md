@@ -28,6 +28,44 @@ When modifying plugins:
 3. Follow kebab-case naming for all files and directories
 4. Skills use `SKILL.md` with YAML frontmatter
 
+## Version Management (CRITICAL)
+
+**ALWAYS bump version numbers when making functional changes to plugins.**
+
+### Version Files
+
+| Scope | File | Field |
+|-------|------|-------|
+| Marketplace | `.claude-plugin/marketplace.json` | `metadata.version` |
+| gramps-tools | `plugins/gramps-tools/.claude-plugin/plugin.json` | `version` |
+| research-workflow | `plugins/research-workflow/.claude-plugin/plugin.json` | `version` |
+| evidence-analysis | `plugins/evidence-analysis/.claude-plugin/plugin.json` | `version` |
+| obsidian-genealogy | `plugins/obsidian-genealogy/.claude-plugin/plugin.json` | `version` |
+
+### When to Bump Versions
+
+**MUST bump** (functional changes):
+- Adding/modifying/removing skills, commands, agents, or hooks
+- Changing plugin behavior or functionality
+- Bug fixes that affect plugin operation
+- Schema or API changes
+
+**Skip version bump** (non-functional):
+- Documentation updates (`docs/`, README, comments)
+- Code formatting/style changes with no behavior change
+- Adding/updating CLAUDE.md or other dev docs
+
+### Versioning Rules
+
+1. Use semantic versioning: `MAJOR.MINOR.PATCH`
+2. Bump the specific plugin's version when changing that plugin
+3. Bump marketplace version when:
+   - Adding/removing plugins from the marketplace
+   - Changing marketplace-level configuration
+   - Making a release that includes multiple plugin updates
+4. **Before committing**: Verify version was bumped if functional changes were made
+5. **Before pushing**: Double-check version increments are staged
+
 ## Genealogy Standards
 
 - **Citations**: Follow Elizabeth Shown Mills' Evidence Explained format
