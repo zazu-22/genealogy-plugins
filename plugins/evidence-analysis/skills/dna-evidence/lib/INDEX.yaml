@@ -1,0 +1,15 @@
+files:
+  - path: test-types.md
+    title: DNA Test Types
+    keywords: [atDNA, autosomal, Y-DNA, mtDNA, inheritance, testing]
+    summary: Overview of different DNA test types and their genealogical applications
+
+  - path: match-analysis.md
+    title: Match Analysis
+    keywords: [cM, centimorgans, shared DNA, relationship, match, cousin]
+    summary: Basic concepts for evaluating DNA matches and estimating relationships
+
+  - path: platforms-overview.md
+    title: Testing Platforms
+    keywords: [AncestryDNA, 23andMe, FTDNA, MyHeritage, GEDmatch, testing company]
+    summary: Overview of major DNA testing platforms and their features

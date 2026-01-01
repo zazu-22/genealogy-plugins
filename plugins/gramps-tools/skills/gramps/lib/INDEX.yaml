@@ -1,0 +1,25 @@
+files:
+  - path: xml-structure.md
+    title: Gramps XML Format
+    keywords: [xml, export, backup, gramps-xml, elements, tags, DTD, gzip, gpkg]
+    summary: Complete reference for Gramps XML format including element hierarchy, attributes, and cross-references
+
+  - path: database-schema.md
+    title: Gramps SQLite Database
+    keywords: [sqlite, database, query, schema, tables, SQL, blob, pickle]
+    summary: Database structure, table definitions, and query patterns for Gramps SQLite database
+
+  - path: web-api.md
+    title: Gramps Web API
+    keywords: [REST, API, docker, endpoints, sync, HTTP, JSON, authentication]
+    summary: Gramps Web REST API endpoints, authentication, and container operations
+
+  - path: data-model.md
+    title: Gramps Data Model
+    keywords: [person, family, event, place, source, citation, handle, primary objects]
+    summary: Core Gramps objects, their relationships, and the handle reference system
+
+  - path: best-practices.md
+    title: Gramps Best Practices
+    keywords: [methodology, data entry, standards, names, dates, places, sources]
+    summary: Data entry standards, naming conventions, and Gramps-specific methodology

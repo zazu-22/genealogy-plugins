@@ -1,0 +1,17 @@
+{
+  "description": "Advisory reminder for Evidence Explained citation format in genealogy files",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if this file write/edit was to a genealogy-related file (in ~/Genealogy/, a .gramps file, or a person/source note in Obsidian). If so, and if the content includes source citations, briefly verify they follow Evidence Explained format. If citations are present but may not follow EE style, provide a gentle reminder about proper citation format. This is advisory only - do not block the operation. Only respond if this was a genealogy file with citations.",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}

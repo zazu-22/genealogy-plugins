@@ -1,0 +1,17 @@
+{
+  "description": "Log Gramps CLI and backup operations for audit trail",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if this Bash command was a Gramps operation (gramps CLI, gramps-backup.sh, or operations on ~/Genealogy/git-exports/). If so, log a brief note about what was done. If it was a backup or export operation, confirm success. Only respond if this was a Gramps-related operation, otherwise return empty.",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

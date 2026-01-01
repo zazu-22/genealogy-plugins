@@ -1,0 +1,20 @@
+files:
+  - path: citation-types.md
+    title: Citation Types
+    keywords: [source list, bibliography, first reference, subsequent note, footnote, endnote]
+    summary: Four citation formats and when to use each
+
+  - path: source-categories.md
+    title: Source Categories
+    keywords: [census, vital records, church, land, military, newspaper, cemetery, probate]
+    summary: Citation patterns for common genealogical source types
+
+  - path: formatting-rules.md
+    title: Formatting Rules
+    keywords: [punctuation, italics, capitalization, abbreviations, dates, numbers]
+    summary: Style conventions for Evidence Explained citations
+
+  - path: digital-sources.md
+    title: Digital Sources
+    keywords: [website, database, online, URL, access date, FamilySearch, Ancestry, DNA]
+    summary: Citing digital resources, databases, and DNA test results

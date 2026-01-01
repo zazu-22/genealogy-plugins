@@ -1,0 +1,340 @@
+# Gramps Data Model
+
+Understanding Gramps primary objects and their relationships.
+
+## Primary Objects
+
+Gramps organizes genealogical data into ten primary object types. Each is independently stored and cross-referenced via handles.
+
+### Object Hierarchy
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    GRAMPS DATA MODEL                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Person ◄──────┬──────► Family                              │
+│     │          │           │                                 │
+│     ▼          │           ▼                                 │
+│  Event ◄───────┴────► Event (Family events)                 │
+│     │                      │                                 │
+│     ▼                      ▼                                 │
+│  Place                  Place                                │
+│     │                      │                                 │
+│     └──────► Citation ◄────┘                                │
+│                  │                                           │
+│                  ▼                                           │
+│               Source                                         │
+│                  │                                           │
+│                  ▼                                           │
+│             Repository                                       │
+│                                                              │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │ Cross-cutting: Note, Media, Tag (attach to any)      │    │
+│  └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Person
+
+Represents an individual in the family tree.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique internal identifier |
+| gramps_id | User-facing ID (e.g., I0001) |
+| gender | Male, Female, Unknown |
+| names | List of Name objects (birth, married, aka) |
+| events | References to Event objects with roles |
+| families | Families where person is parent |
+| parent_families | Families where person is child |
+| attributes | Custom key-value pairs |
+
+### Name Structure
+```
+Name
+├── type (Birth Name, Married Name, Also Known As, Nickname)
+├── first_name
+├── surname_list
+│   ├── surname
+│   ├── prefix
+│   └── origin_type (Inherited, Taken, Given, etc.)
+├── suffix (Jr., III, etc.)
+├── title (Dr., Rev., etc.)
+├── call_name
+└── nick
+```
+
+### Gender Values
+- `0` - Female
+- `1` - Male
+- `2` - Unknown
+
+## Family
+
+Connects individuals as parents and children.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., F0001) |
+| father | Handle reference to father Person |
+| mother | Handle reference to mother Person |
+| children | List of ChildRef objects |
+| relationship_type | Type of union |
+| events | Family events (marriage, divorce) |
+
+### Relationship Types
+- `Married` - Legal marriage
+- `Unmarried` - Partnership without marriage
+- `Civil Union` - Legal civil partnership
+- `Unknown` - Relationship type unknown
+
+### Child References
+```
+ChildRef
+├── ref (handle to Person)
+├── mrel (mother relationship: Birth, Adopted, Stepchild, Foster, Unknown)
+└── frel (father relationship: Birth, Adopted, Stepchild, Foster, Unknown)
+```
+
+## Event
+
+Records occurrences in lives of individuals and families.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., E0001) |
+| type | Event type (Birth, Death, Marriage, etc.) |
+| date | Date object (exact, range, approximate) |
+| place | Handle reference to Place |
+| description | Free-text description |
+| participants | Via EventRef from Person/Family |
+
+### Event Types
+**Life Events**:
+- Birth, Death, Burial, Cremation
+- Baptism, Christening, Confirmation
+- Bar Mitzvah, Bas Mitzvah
+
+**Personal Events**:
+- Occupation, Education, Religion
+- Residence, Immigration, Emigration, Naturalization
+- Military Service, Retirement
+
+**Family Events**:
+- Marriage, Divorce, Annulment
+- Engagement, Marriage Banns, Marriage Contract
+- Marriage License, Marriage Settlement
+
+**Other**:
+- Census, Probate, Will
+- Property, Graduation
+- Custom types allowed
+
+### Event References
+When a Person or Family references an Event:
+```
+EventRef
+├── ref (handle to Event)
+├── role (Primary, Witness, Celebrant, Informant, Bride, Groom, etc.)
+└── attributes (additional context)
+```
+
+## Place
+
+Geographic locations with hierarchical relationships.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., P0001) |
+| title | Formatted place name |
+| names | List of PlaceName objects |
+| type | Place type (Country, State, County, City, etc.) |
+| coordinates | Latitude and longitude |
+| parent | Handle reference to containing place |
+
+### Place Hierarchy
+```
+Country (USA)
+  └── State (Ohio)
+       └── County (Muskingum)
+            └── City (Zanesville)
+                 └── Building (Court House)
+```
+
+### PlaceName Structure
+```
+PlaceName
+├── value (the name text)
+├── lang (language code: en, de, es)
+└── date (when this name was used)
+```
+
+## Source
+
+Documentary evidence for genealogical claims.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., S0001) |
+| title | Source title |
+| author | Author/creator |
+| pubinfo | Publication information |
+| abbreviation | Short reference form |
+| repositories | Where source is held |
+| attributes | Type, medium, etc. |
+
+### Source vs Citation
+```
+Source: "1900 U.S. Census"
+  ├── Citation: "Page 5, Line 23, John Smith household"
+  ├── Citation: "Page 12, Line 8, Mary Jones household"
+  └── Citation: "Page 45, Line 1, William Brown household"
+```
+
+## Citation
+
+Specific reference to a source for a particular fact.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., C0001) |
+| source | Handle reference to Source |
+| page | Page/location within source |
+| date | Date accessed or publication date |
+| confidence | Quality rating (0-4) |
+
+### Confidence Levels
+| Value | Level | Use When |
+|-------|-------|----------|
+| 0 | Very Low | Questionable source |
+| 1 | Low | Secondary source, possible errors |
+| 2 | Normal | Typical reliable source (default) |
+| 3 | High | Primary source, firsthand knowledge |
+| 4 | Very High | Original record, direct evidence |
+
+## Repository
+
+Physical or virtual location where sources are held.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., R0001) |
+| name | Repository name |
+| type | Archive, Library, Church, Website, etc. |
+| address | Physical address |
+| urls | Web addresses |
+
+### Repository Reference
+Sources link to repositories via:
+```
+RepoRef
+├── ref (handle to Repository)
+├── callno (call number/catalog number)
+└── medium (Original, Photocopy, Microfilm, Digital, etc.)
+```
+
+## Note
+
+Text annotations attached to any object.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., N0001) |
+| type | General, Research, Transcript, etc. |
+| text | Styled text content |
+| format | Plain text, styled, or HTML |
+
+### Note Types
+- `General` - General notes
+- `Research` - Research notes and analysis
+- `Transcript` - Document transcriptions
+- `Source text` - Quoted source content
+- `Citation` - Citation-specific notes
+
+## Media
+
+Files associated with genealogical records.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| gramps_id | User-facing ID (e.g., O0001) |
+| path | File path (relative to media directory) |
+| mime | MIME type |
+| description | Description of media |
+| date | Date of media (photo date, etc.) |
+| checksum | File integrity hash |
+
+### Media References
+Objects reference media via:
+```
+MediaRef
+├── ref (handle to Media)
+├── rect (crop region: x1, y1, x2, y2)
+└── attributes (additional metadata)
+```
+
+## Tag
+
+Colored labels for organization.
+
+### Attributes
+| Attribute | Description |
+|-----------|-------------|
+| handle | Unique identifier |
+| name | Tag name |
+| color | Hex color code |
+| priority | Sort order |
+
+## Handle Reference System
+
+### How Handles Work
+1. Every object has a unique handle (stable internal ID)
+2. Cross-references use handle values
+3. IDs (I0001, F0001) are user-facing only
+4. Handles survive merge operations
+
+### Reference Types
+```
+Direct references (hlink attribute):
+  - place="handle"      (Event → Place)
+  - sourceref="handle"  (Citation → Source)
+
+Reference objects (complex relationships):
+  - EventRef (Person/Family → Event)
+  - ChildRef (Family → Person)
+  - MediaRef (Any → Media)
+  - RepoRef (Source → Repository)
+```
+
+## Data Integrity
+
+### Referential Integrity
+Gramps maintains referential integrity:
+- Deleting a referenced object prompts for resolution
+- Orphaned references are cleaned up
+- Merge operations update all references
+
+### Validation
+Check for common issues:
+- Persons without events
+- Citations without sources
+- Events without dates or places
+- Sources without citations (unused)

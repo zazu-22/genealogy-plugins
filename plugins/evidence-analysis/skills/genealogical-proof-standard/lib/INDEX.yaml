@@ -1,0 +1,25 @@
+files:
+  - path: exhaustive-research.md
+    title: Reasonably Exhaustive Research
+    keywords: [completeness, sources, repositories, negative search, scope]
+    summary: Element 1 - Conducting thorough research across all relevant source types
+
+  - path: complete-citations.md
+    title: Complete and Accurate Citations
+    keywords: [documentation, citation, verification, source identification]
+    summary: Element 2 - Documenting sources so others can verify your work
+
+  - path: evidence-correlation.md
+    title: Analysis and Correlation
+    keywords: [analysis, correlation, comparison, weight, evaluation]
+    summary: Element 3 - Skillfully analyzing and correlating evidence
+
+  - path: contradiction-resolution.md
+    title: Resolution of Conflicts
+    keywords: [contradiction, conflict, discrepancy, resolution, explanation]
+    summary: Element 4 - Addressing and resolving contradictory evidence
+
+  - path: proof-arguments.md
+    title: Proof Arguments
+    keywords: [conclusion, reasoning, writing, proof statement, argument]
+    summary: Element 5 - Writing sound, coherent proof arguments

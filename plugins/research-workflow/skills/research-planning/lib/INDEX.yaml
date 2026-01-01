@@ -1,0 +1,20 @@
+files:
+  - path: research-questions.md
+    title: Research Questions
+    keywords: [question, SMART, formulation, specific, focused, goal]
+    summary: Formulating effective research questions that guide productive research
+
+  - path: record-selection.md
+    title: Record Selection
+    keywords: [sources, records, search, priority, record types, selection]
+    summary: Choosing which records to search for different research questions
+
+  - path: locality-research.md
+    title: Locality Research
+    keywords: [jurisdiction, county, state, local, availability, repository]
+    summary: Understanding record creation, survival, and location by jurisdiction
+
+  - path: research-logs.md
+    title: Research Logs
+    keywords: [log, documentation, tracking, notes, organization, negative]
+    summary: Maintaining research logs and documenting the research process
