@@ -243,6 +243,54 @@ LIMITATIONS:
 - Record what you searched and didn't find
 - Demonstrates thoroughness
 
+## Mapping Evidence Quality to Gramps Confidence
+
+Gramps uses a 0-4 confidence scale for citations. Use this mapping to translate Mills' evidence classification to Gramps confidence levels.
+
+### Evidence-to-Confidence Mapping
+
+| Evidence Type | Mills Classification | Gramps | Example |
+|---------------|---------------------|--------|---------|
+| Direct + Primary + Original | Best possible | 4 (Very High) | Birth certificate signed by attending physician |
+| Direct + Primary + Derivative | Strong | 3 (High) | Certified copy of birth certificate |
+| Direct + Secondary | Good | 2-3 (Normal/High) | Death certificate stating birth date |
+| Indirect + Primary | Moderate | 2 (Normal) | Census record (age → birth year) |
+| Indirect + Secondary | Weaker | 1-2 (Low/Normal) | Newspaper article stating age |
+| Circumstantial | Requires corroboration | 1 (Low) | Absence from tax list |
+| Unverified/User-submitted | Questionable | 0 (Very Low) | Online tree without sources |
+
+### Decision Framework
+
+Ask these questions to determine confidence level:
+
+**Question 1: Does the source directly state the fact?**
+- YES = Direct evidence (start at 3)
+- NO = Indirect evidence (start at 2)
+
+**Question 2: Was the informant present at the event?**
+- YES = Primary information (+1 or keep)
+- NO = Secondary information (-1)
+
+**Question 3: Is this the original record or a copy?**
+- ORIGINAL = Original source (+1 or keep)
+- COPY = Derivative source (-1)
+
+**General Pattern:**
+- More "yes" answers = higher confidence
+- Default to 2 (Normal) when uncertain
+- Reserve 4 (Very High) for truly exceptional evidence
+- Use 0 (Very Low) only for seriously questionable sources
+
+### Gramps Confidence Reference
+
+| Value | Level | When to Use |
+|-------|-------|-------------|
+| 4 | Very High | Original, direct, primary - the gold standard |
+| 3 | High | Original or direct, generally reliable |
+| 2 | Normal | Typical derivative source, consistent with others (default) |
+| 1 | Low | Derivative with errors possible, requires corroboration |
+| 0 | Very Low | Unverified, questionable, or known unreliable |
+
 ## Quality Assurance Questions
 
 Before finalizing your conclusion:

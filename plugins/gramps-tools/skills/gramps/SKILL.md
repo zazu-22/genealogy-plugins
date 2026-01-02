@@ -33,6 +33,21 @@ Expert knowledge for working with Gramps, the open-source genealogy application.
 
 See [lib/web-api.md](lib/web-api.md) for full API documentation.
 
+## Critical Limitation: Notes Cannot Have Citations
+
+**Gramps notes cannot be formally cited.** The Gramps DTD defines notes as `(text, style*, tagref*)` - there is no `citationref` element allowed. This means:
+
+- GEDCOM notes with source references (2 SOUR @Sxx@) **lose those links on import**
+- You cannot attach citations to notes in Gramps
+- Research analysis notes require alternative approaches
+
+**Workarounds for Research Notes:**
+1. **Cite sources on relevant events** - If a note analyzes birth year evidence, cite those sources on the Birth event instead
+2. **Move analysis to Obsidian** - Use Obsidian for proof arguments with proper footnotes (see `obsidian-genealogy` skill)
+3. **Inline text references** - Add source IDs as text within the note (e.g., "per 1900 Census [S0003]")
+
+See [lib/data-model.md](lib/data-model.md#note-citation-limitation) for full details.
+
 ## When This Skill Applies
 
 - **Querying or modifying Gramps data via REST API** (primary method)

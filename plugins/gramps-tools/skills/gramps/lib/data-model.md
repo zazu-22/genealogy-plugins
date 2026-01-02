@@ -320,6 +320,39 @@ Text annotations attached to any object.
 - `Source text` - Quoted source content
 - `Citation` - Citation-specific notes
 
+### Note-Citation Limitation
+
+**Critical:** Gramps notes cannot have citations attached. This is a structural limitation in the Gramps DTD:
+
+```
+note = (text, style*, tagref*)
+```
+
+Note the absence of `citationref` in the element definition. This has important implications:
+
+**Impact on GEDCOM Import:**
+- GEDCOM notes with source references (`2 SOUR @Sxx@`) lose those links when imported into Gramps
+- There is no way to preserve note→source relationships in the Gramps data model
+- Users may not realize data was lost during import
+
+**Impact on Research Workflow:**
+- Research analysis notes that reference multiple sources cannot formally cite those sources within Gramps
+- The Source-Citation model only flows: Person/Event → Citation → Source (not Note → Citation)
+
+**Workarounds:**
+
+| Approach | When to Use | Example |
+|----------|-------------|---------|
+| **Cite on events** | Analysis relates to specific events | Birth year analysis → cite sources on Birth event |
+| **Obsidian notes** | Complex proof arguments | Full GPS-compliant proof with footnotes |
+| **Inline references** | Quick informal notes | "per 1900 Census [S0003]" in note text |
+| **Note linking** | Cross-reference analysis | "See Obsidian: Research/Birth-Year-Analysis.md" |
+
+**Best Practice:** For significant research conclusions:
+1. Record facts and dates in Gramps (with citations on events)
+2. Write detailed analysis in Obsidian (with proper footnotes)
+3. Add a Gramps note referencing the Obsidian document
+
 ### Notes vs Attributes for GEDCOM Export
 
 **Prefer Notes** for:

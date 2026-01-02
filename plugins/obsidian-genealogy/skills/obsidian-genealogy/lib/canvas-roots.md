@@ -136,13 +136,77 @@ John appears in the 1850 census as an infant...
 
 ## Workflow Integration
 
-### Recommended Workflow
+### When to Use Each System
 
-1. **Primary editing in Gramps**: Structured genealogical data
-2. **Export GEDCOM weekly**: Or after significant changes
-3. **Import to Obsidian**: Update Canvas Roots notes
-4. **Add research in Obsidian**: Narratives, analysis, hypotheses
-5. **Link to sources**: Create and link source notes
+| Data Type | System | Reason |
+|-----------|--------|--------|
+| Vital dates, relationships | Gramps | Structured data, GEDCOM exports, sharing |
+| Source records | Gramps | Formal citations, linked to events |
+| Events with citations | Gramps | Linked to people/families, queryable |
+| Research narratives | Obsidian | Narrative flexibility, markdown |
+| Proof arguments | Obsidian | Complex analysis, GPS compliance, footnotes |
+| Evidence evaluation | Obsidian | Weighing conflicting sources |
+| DNA analysis | Obsidian | Complex narrative format |
+
+### Recommended Workflow for Research Analysis
+
+When doing significant research that requires analyzing multiple sources:
+
+1. **Record sources in Gramps** - Create source records with full metadata
+2. **Cite sources on events** - Link citations to Birth, Death, Census, etc.
+3. **Write analysis in Obsidian** - Create research note with R-YYYY-NNN ID
+4. **Reference from Gramps** - Update Gramps note to point to Obsidian document
+
+### Example: Birth Year Analysis
+
+**In Gramps:**
+- Birth event (E0123) has citations from 6 census records, 2 newspapers
+- Person note (N0045) says:
+  ```
+  Birth year analysis complete. Conclusion: 1862.
+  See Obsidian: Research/Birth Year Analysis - John Barry (R-2026-001).md
+  ```
+
+**In Obsidian:**
+- Full GPS-compliant analysis in `Research/Birth Year Analysis - John Barry (R-2026-001).md`
+- Evidence table comparing all sources
+- Discussion of conflicting ages
+- Conclusion with reasoning
+- Proper footnotes in Evidence Explained format
+
+### What Canvas Roots Does NOT Sync
+
+Be aware of these limitations - manual management or API scripts required:
+
+| Data | Synced? | Notes |
+|------|---------|-------|
+| Person names, dates | Yes | Basic vital info imports |
+| Family relationships | Yes | Parent-child, spouse links |
+| Note content from Gramps | **No** | Gramps notes don't import |
+| Citations on events | **No** | Must check Gramps directly |
+| Custom attributes | **No** | Not in GEDCOM export |
+| Media files | **No** | File links only |
+
+### Bidirectional Workflow Pattern
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     GRAMPS (Structured Data)                 │
+│  Sources → Citations → Events → People/Families             │
+│                          ↓                                   │
+│  Note: "See Obsidian: R-2026-001"                           │
+└─────────────────────────────────────────────────────────────┘
+                           ↓ Export GEDCOM
+                           ↓ Import via Canvas Roots
+┌─────────────────────────────────────────────────────────────┐
+│                    OBSIDIAN (Research Notes)                 │
+│  Research/R-2026-001.md                                     │
+│  - Full proof argument                                       │
+│  - Evidence table                                            │
+│  - Footnotes: [1] 1870 Census... [2] Death cert...          │
+│  - gramps_id: I0083, gramps_note_id: N0045                  │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ### Sync Strategy
 

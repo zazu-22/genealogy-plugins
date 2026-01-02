@@ -76,8 +76,19 @@ For detailed information, see:
 | Evidence Types | [lib/evidence-types.md](lib/evidence-types.md) | direct, indirect, negative, implied |
 | Evaluation Guide | [lib/evaluation-checklist.md](lib/evaluation-checklist.md) | quality, weight, reliability |
 
+## Common Skill Combinations
+
+| Task | Primary Skill | Supporting Skills |
+|------|--------------|-------------------|
+| Evaluate a new source | `source-analysis` | `evidence-explained` (citation format) |
+| Build proof argument | `genealogical-proof-standard` | `source-analysis`, `obsidian-genealogy` |
+| Record source in Gramps | `gramps` | `source-analysis` (classification) |
+| Create research note | `obsidian-genealogy` | `source-analysis`, `genealogical-proof-standard` |
+| Set citation confidence | `gramps` | `source-analysis` (see evaluation-checklist.md) |
+
 ## Related Skills
 
 - `evidence-explained` - Citation formatting methodology
 - `genealogical-proof-standard` - Applying GPS to conclusions
 - `gramps` - Recording source analysis in Gramps
+- `obsidian-genealogy` - Research notes with evidence tables

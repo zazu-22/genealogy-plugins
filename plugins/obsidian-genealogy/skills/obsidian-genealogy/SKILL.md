@@ -133,8 +133,20 @@ For detailed information, see:
 | Vault Structure | [lib/vault-structure.md](lib/vault-structure.md) | directories, organization |
 | Canvas Roots | [lib/canvas-roots.md](lib/canvas-roots.md) | import, gedcom, sync |
 
+## Common Skill Combinations
+
+| Task | Primary Skill | Supporting Skills |
+|------|--------------|-------------------|
+| Import GEDCOM data | `obsidian-genealogy` | `gramps` (export) |
+| Create research note | `obsidian-genealogy` | `genealogical-proof-standard`, `source-analysis` |
+| Write proof argument | `genealogical-proof-standard` | `obsidian-genealogy` (research schema) |
+| Link Gramps to Obsidian | `gramps` | `obsidian-genealogy` (canvas-roots) |
+| Document source analysis | `source-analysis` | `obsidian-genealogy` (evidence tables) |
+
 ## Related Skills
 
 - `evidence-explained` - Citation formatting for source notes
 - `gramps` - Source data for person notes
 - `research-planning` - Structuring research narratives
+- `genealogical-proof-standard` - GPS-compliant research notes
+- `source-analysis` - Classifying sources for research notes

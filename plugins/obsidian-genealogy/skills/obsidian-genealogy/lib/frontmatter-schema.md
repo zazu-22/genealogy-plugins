@@ -163,6 +163,106 @@ sources:
 ---
 ```
 
+## Research Note Schema
+
+For proof arguments, evidence analysis, and research conclusions. Use this for GPS-compliant research documentation that lives in Obsidian.
+
+```yaml
+---
+type: research
+research_id: "R-2026-001"              # Unique ID (R-YEAR-SEQUENCE)
+subject_gramps_id: "I0083"             # Primary person being researched
+subject_name: "John William Barry"     # Human-readable name
+topic: "Birth Year Analysis"           # What question does this answer?
+conclusion: "1862 based on preponderance of evidence"
+status: complete | in_progress | abandoned
+
+# Source references (Gramps source IDs used in analysis)
+sources_cited:
+  - S0003
+  - S0028
+  - S0029
+
+# Optional: Link to related Gramps data
+gramps_note_id: "N0045"                # If there's a corresponding Gramps note
+gramps_event_id: "E0123"               # Related event in Gramps
+
+# Metadata
+created: 2026-01-02
+last_updated: 2026-01-02
+tags:
+  - proof-argument
+  - birth-research
+---
+```
+
+### Research Note Body Structure
+
+Use this template for consistent, GPS-compliant research documentation:
+
+```markdown
+# [Topic]: [Subject Name]
+
+## Research Question
+[Clear statement of what you're trying to determine]
+
+Example: "What was John William Barry's birth year? Census records show conflicting
+ages across multiple decades."
+
+## Evidence Summary
+
+| Source | Date | States | Classification | Confidence |
+|--------|------|--------|----------------|------------|
+| 1870 Census | Jun 1870 | Age 8 (b. ~1862) | Primary/Indirect | Normal |
+| 1880 Census | Jun 1880 | Age 17 (b. ~1863) | Primary/Indirect | Normal |
+| Death Cert | 1945 | Born 1862 | Secondary/Direct | Low |
+
+## Analysis
+[Evaluation of evidence quality, conflicts, resolution]
+
+- The 1870 census is closest to the birth event and thus most reliable
+- The death certificate informant was a child who may not have known exact birth year
+- All sources cluster around 1862-1863; discrepancy is within normal census variance
+
+## Conclusion
+[Final determination with reasoning]
+
+John William Barry was born in 1862, based on the preponderance of evidence.
+The 1870 census (age 8) is given greatest weight as the earliest record.
+
+---
+
+## Notes
+[Footnotes with full citations using Evidence Explained format]
+
+[1]: 1870 U.S. Census, Muskingum County, Ohio, population schedule...
+[2]: Ohio, Deaths, 1908-1953, certificate no. 12345...
+
+## Gramps Data
+- Person: I0083
+- Birth Event: E0123
+- Gramps Note: N0045 (points to this research document)
+```
+
+### Research ID Scheme
+
+Use `R-YYYY-NNN` format for unique identification:
+- `R` = Research document type prefix
+- `YYYY` = Year created
+- `NNN` = Sequential number (001, 002, etc.)
+
+**Benefits:**
+- Easy cross-referencing from Gramps notes (e.g., "See Obsidian: R-2026-001")
+- Unique identification across the vault
+- Chronological organization
+- Sortable and searchable
+
+**File Naming Convention:**
+```
+Research/[Topic] - [Subject Name] (R-YYYY-NNN).md
+Example: Research/Birth Year Analysis - John William Barry (R-2026-001).md
+```
+
 ## Date Formats
 
 Obsidian genealogy notes accept flexible date formats:

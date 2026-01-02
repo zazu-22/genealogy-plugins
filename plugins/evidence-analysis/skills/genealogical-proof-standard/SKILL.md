@@ -69,6 +69,97 @@ You have **proof** (not just evidence) when:
 - No reasonable alternative explanation remains
 - The reasoning would convince a skeptical peer
 
+## Implementing GPS in Gramps + Obsidian
+
+Each GPS element has a natural home in either Gramps or Obsidian:
+
+### Element 1: Reasonably Exhaustive Search
+
+| Task | System | Details |
+|------|--------|---------|
+| Document sources searched | Obsidian | Research note "Sources Consulted" section |
+| Record negative searches | Obsidian | List sources searched with no results |
+| Track repositories checked | Obsidian | Include physical and online repositories |
+
+**In Obsidian research note:**
+```markdown
+## Sources Consulted
+- [x] 1870-1920 U.S. Census (all found)
+- [x] Ohio vital records (birth not found - records start 1908)
+- [x] Muskingum County probate (estate file found)
+- [ ] Church records (not yet searched)
+```
+
+### Element 2: Complete, Accurate Citations
+
+| Task | System | Details |
+|------|--------|---------|
+| Create source records | Gramps | Full metadata per Evidence Explained |
+| Attach citations to events | Gramps | Link via API or UI |
+| Format footnotes | Obsidian | Full EE format in research notes |
+
+**In Gramps:** Source → Citation → Event linkage
+**In Obsidian:** Full footnote format in Notes section
+
+### Element 3: Analysis and Correlation
+
+| Task | System | Details |
+|------|--------|---------|
+| Classify sources | Both | Use `source-analysis` skill |
+| Create evidence table | Obsidian | Compare what each source says |
+| Set confidence levels | Gramps | Citation confidence (0-4) |
+
+**Evidence table in Obsidian:**
+```markdown
+| Source | Date | Birth Year | Classification | Confidence |
+|--------|------|------------|----------------|------------|
+| 1870 Census | 1870 | ~1862 | Primary/Indirect | Normal (2) |
+```
+
+### Element 4: Conflicting Evidence Resolution
+
+| Task | System | Details |
+|------|--------|---------|
+| Identify conflicts | Obsidian | Evidence table reveals discrepancies |
+| Explain conflicts | Obsidian | Analysis section of research note |
+| Adjust confidence | Gramps | Lower confidence for unreliable sources |
+
+**In Obsidian:**
+```markdown
+## Conflict Resolution
+The 1880 census shows age 17 (b. ~1863), conflicting with other records.
+This is likely informant error - the census was taken in June, possibly
+before his birthday, and informants often rounded ages.
+```
+
+### Element 5: Soundly Reasoned Conclusion
+
+| Task | System | Details |
+|------|--------|---------|
+| State conclusion | Obsidian | Conclusion section of research note |
+| Update Gramps data | Gramps | Set dates/facts per conclusion |
+| Link systems | Both | Gramps note → Obsidian research ID |
+
+**In Gramps:**
+- Update Birth event date to concluded year
+- Add note: "Birth year determined via analysis. See Obsidian: R-2026-001"
+
+**In Obsidian:**
+```markdown
+## Conclusion
+John William Barry was born in 1862, based on preponderance of evidence.
+```
+
+### Quick Reference: Where Each Element Lives
+
+| GPS Element | Primary System | Secondary System |
+|-------------|----------------|------------------|
+| 1. Exhaustive search | Obsidian (documentation) | Gramps (source records) |
+| 2. Complete citations | Gramps (source→citation) | Obsidian (footnotes) |
+| 3. Analysis/correlation | Obsidian (evidence table) | Gramps (confidence levels) |
+| 4. Conflict resolution | Obsidian (analysis) | Gramps (confidence) |
+| 5. Written conclusion | Obsidian (proof argument) | Gramps (data + note link) |
+
 ## Reference Materials
 
 For detailed information, see:
@@ -86,3 +177,5 @@ For detailed information, see:
 - `source-analysis` - Classifying sources and evidence
 - `evidence-explained` - Citation methodology
 - `research-planning` - Planning exhaustive research
+- `obsidian-genealogy` - Research note schemas and workflows
+- `gramps` - Recording conclusions and linking to Obsidian

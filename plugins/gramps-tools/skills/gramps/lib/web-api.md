@@ -283,6 +283,127 @@ response = requests.get(
 results = response.json()
 ```
 
+## Update Patterns
+
+### Full Object Required for PUT
+
+The Gramps Web API requires the **full object** for PUT updates, not partial updates. This is a common source of errors.
+
+**Correct pattern:**
+```python
+# 1. Get full object
+req = urllib.request.Request(f"{BASE_URL}/api/events/{event_handle}", headers=headers)
+with urllib.request.urlopen(req) as resp:
+    event = json.loads(resp.read())
+
+# 2. Modify the field you need
+event['citation_list'].append(new_citation_handle)
+
+# 3. Send full object back
+req = urllib.request.Request(
+    f"{BASE_URL}/api/events/{event_handle}",
+    data=json.dumps(event).encode(),
+    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+    method='PUT'
+)
+urllib.request.urlopen(req)
+```
+
+**This will NOT work:**
+```python
+# Partial update - FAILS
+req = urllib.request.Request(
+    f"{BASE_URL}/api/events/{event_handle}",
+    data=json.dumps({"citation_list": [citation_handle]}).encode(),
+    headers=headers,
+    method='PUT'
+)
+# Error: "Unknown classes: Event, citation_list"
+```
+
+### Common Mistakes
+
+| Mistake | Result | Solution |
+|---------|--------|----------|
+| Sending partial object | "Unknown classes" error | GET full object first, modify, PUT back |
+| Missing `_class` field | Validation error | Include `_class` in all objects |
+| Wrong handle format | Object not found | Use full handle from GET response |
+
+## Creating and Linking Citations
+
+Complete example of creating a citation and attaching it to an existing event.
+
+### Step-by-Step Example
+
+```python
+import json
+import urllib.request
+
+# Setup (assumes token and BASE_URL already configured)
+headers = {
+    "Authorization": f"Bearer {token}",
+    "Content-Type": "application/json"
+}
+
+# 1. Create the citation
+citation_data = {
+    "_class": "Citation",
+    "source_handle": "abc123def456",  # Handle of existing source
+    "page": "Page 5, Line 23, dwelling 12, family 15",
+    "confidence": 2  # 0=Very Low, 1=Low, 2=Normal, 3=High, 4=Very High
+}
+
+req = urllib.request.Request(
+    f"{BASE_URL}/api/citations/",
+    data=json.dumps(citation_data).encode(),
+    headers=headers,
+    method='POST'
+)
+with urllib.request.urlopen(req) as resp:
+    result = json.loads(resp.read())
+
+# Response is a list with transaction info
+# Example: [{"_class": "Citation", "handle": "xyz789..."}]
+citation_handle = result[0]['handle']
+print(f"Created citation: {citation_handle}")
+
+# 2. Get the event to update
+event_handle = "event123abc"  # The event you want to cite
+req = urllib.request.Request(
+    f"{BASE_URL}/api/events/{event_handle}",
+    headers=headers
+)
+with urllib.request.urlopen(req) as resp:
+    event = json.loads(resp.read())
+
+# 3. Add citation to event's citation_list
+if 'citation_list' not in event:
+    event['citation_list'] = []
+event['citation_list'].append(citation_handle)
+
+# 4. Update event with full object
+req = urllib.request.Request(
+    f"{BASE_URL}/api/events/{event_handle}",
+    data=json.dumps(event).encode(),
+    headers=headers,
+    method='PUT'
+)
+urllib.request.urlopen(req)
+print(f"Citation {citation_handle} linked to event {event_handle}")
+```
+
+### Confidence Level Reference
+
+| Value | Level | When to Use |
+|-------|-------|-------------|
+| 0 | Very Low | Unverified user-submitted data, questionable sources |
+| 1 | Low | Derivative with potential errors, distant hearsay |
+| 2 | Normal | Derivative source, consistent with others (default) |
+| 3 | High | Original record, indirect evidence |
+| 4 | Very High | Original record, direct evidence, firsthand knowledge |
+
+See `source-analysis` skill for mapping Mills' evidence classification to these levels.
+
 ## Security Considerations
 
 - Run behind Tailscale VPN (no public exposure)
