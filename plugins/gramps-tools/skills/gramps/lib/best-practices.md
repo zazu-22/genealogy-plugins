@@ -340,3 +340,93 @@ JONES_Mary_Portrait_1920.jpg
 2. Review low-confidence citations
 3. Verify media paths are valid
 4. Check for private data flags
+
+## Import/Export (API-First Workflow)
+
+### Primary Method: REST API
+
+All Gramps data modifications should use the REST API:
+
+```python
+import json
+import urllib.request
+
+# Read credentials and authenticate (see web-api.md for full pattern)
+with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
+    creds = json.load(f)['local']
+
+# Get token
+data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
+req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
+                              headers={"Content-Type": "application/json"})
+with urllib.request.urlopen(req) as resp:
+    token = json.loads(resp.read())['access_token']
+headers = {"Authorization": f"Bearer {token}"}
+
+# Create a new person
+person_data = {
+    "gramps_id": "I9999",
+    "gender": 1,  # 1=Male, 0=Female, 2=Unknown
+    "primary_name": {
+        "first_name": "John",
+        "surname_list": [{"surname": "Smith"}]
+    }
+}
+
+req = urllib.request.Request(
+    f"{creds['url']}/api/people/",
+    data=json.dumps(person_data).encode(),
+    headers={**headers, "Content-Type": "application/json"},
+    method="POST"
+)
+with urllib.request.urlopen(req) as resp:
+    result = json.loads(resp.read())
+    print(f"Created person with handle: {result['handle']}")
+```
+
+### Export via API
+
+For bulk exports, use the API export endpoints:
+
+```python
+# Export to Gramps XML via API
+req = urllib.request.Request(
+    f"{creds['url']}/api/exporters/gramps",
+    headers=headers
+)
+with urllib.request.urlopen(req) as resp:
+    with open('export.gramps', 'wb') as f:
+        f.write(resp.read())
+```
+
+### Undo Support
+
+API changes can be undone via transaction history:
+
+```python
+# List recent transactions
+req = urllib.request.Request(
+    f"{creds['url']}/api/transactions/history",
+    headers=headers
+)
+
+# Undo a specific transaction
+req = urllib.request.Request(
+    f"{creds['url']}/api/transactions/history/{transaction_id}/undo",
+    headers=headers,
+    method="POST"
+)
+```
+
+### Gramps CLI (Deprecated for Claude Code)
+
+**WARNING**: The Gramps CLI is unreliable on macOS and XML import creates duplicates.
+
+The following CLI patterns are **deprecated for Claude Code use**:
+- `gramps -O "tree" -e file.gramps -f gramps-xml` - Use API export instead
+- `gramps -O "tree" -i file.gramps` - **DO NOT USE** - creates duplicates
+- `gramps -C "tree"` - Create via API or Gramps Desktop
+
+CLI may still be used for:
+- User-maintained backup scripts (external to Claude Code)
+- Desktop-only operations performed manually by the user

@@ -8,6 +8,18 @@ argument-hint: "--format <xml|gedcom|web>"
 
 Export the Gramps family tree in various formats.
 
+## API-First Notice
+
+**Preferred method**: Use the Gramps Web API for exports. The CLI commands below are deprecated for Claude Code use but preserved for reference.
+
+### API Export Endpoints
+
+| Format | API Endpoint | Notes |
+|--------|-------------|-------|
+| XML (Gramps) | `GET /api/exporters/gramps` | Primary backup format |
+| GEDCOM | `GET /api/exporters/gedcom` | For sharing with other software |
+| Web | Not available via API | Use Gramps Desktop |
+
 ## Formats
 
 | Format | Description | Output |
@@ -18,18 +30,56 @@ Export the Gramps family tree in various formats.
 
 ## Instructions
 
-### XML Export
+### Preferred: API Export
+
+```python
+import json
+import urllib.request
+
+# Read credentials
+with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
+    creds = json.load(f)['local']
+
+# Authenticate
+data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
+req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
+                              headers={"Content-Type": "application/json"})
+with urllib.request.urlopen(req) as resp:
+    token = json.loads(resp.read())['access_token']
+headers = {"Authorization": f"Bearer {token}"}
+
+# XML Export
+req = urllib.request.Request(f"{creds['url']}/api/exporters/gramps", headers=headers)
+with urllib.request.urlopen(req) as resp:
+    with open('/Users/jasonshaffer/Genealogy/Exports/family-tree.gramps', 'wb') as f:
+        f.write(resp.read())
+
+# GEDCOM Export
+req = urllib.request.Request(f"{creds['url']}/api/exporters/gedcom", headers=headers)
+with urllib.request.urlopen(req) as resp:
+    with open('/Users/jasonshaffer/Genealogy/Exports/family-tree.ged', 'wb') as f:
+        f.write(resp.read())
+```
+
+### Legacy: CLI Export (Deprecated)
+
+**WARNING**: CLI is unreliable on macOS. Use API instead.
+
+#### XML Export
 ```bash
+# Deprecated for Claude Code - use API instead
 gramps -O "Shaffer-Richardson" -e ~/Genealogy/Exports/family-tree.gramps -f gramps-xml
 ```
 
-### GEDCOM Export
+#### GEDCOM Export
 ```bash
+# Deprecated for Claude Code - use API instead
 gramps -O "Shaffer-Richardson" -e ~/Genealogy/Exports/family-tree.ged -f gedcom
 ```
 
-### Web Export
+#### Web Export
 ```bash
+# No API alternative - use Gramps Desktop for web export
 gramps -O "Shaffer-Richardson" -e ~/Genealogy/Exports/web/ -f navwebpage
 ```
 

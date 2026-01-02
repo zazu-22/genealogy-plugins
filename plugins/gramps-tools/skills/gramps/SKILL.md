@@ -7,11 +7,37 @@ description: Working with Gramps genealogy software - XML structure, database qu
 
 Expert knowledge for working with Gramps, the open-source genealogy application.
 
+## IMPORTANT: API-First Workflow
+
+**Primary method for Gramps database access:** Gramps Web REST API
+
+| Aspect | Details |
+|--------|---------|
+| **API Endpoint** | `http://localhost:5000/api/` |
+| **Credentials** | `~/.config/grampsweb/credentials.json` |
+| **Authentication** | JWT token via `/api/token/` |
+
+**Why API over CLI/XML:**
+- Gramps CLI (`gramps` command) is unreliable on macOS
+- XML import creates duplicates (adds data, doesn't merge)
+- API allows incremental, verifiable changes with undo support
+- Transaction history enables rollback via `/api/transactions/history/{id}/undo`
+
+**Data Access Methods:**
+
+| Method | Use Case | Preference |
+|--------|----------|------------|
+| REST API | Single record CRUD, searches, queries | **Primary** |
+| API Export | Bulk XML export via `/api/exporters/gramps` | Secondary (bulk analysis) |
+| CLI Export | User-managed backup scripts only | Legacy |
+
+See [lib/web-api.md](lib/web-api.md) for full API documentation.
+
 ## When This Skill Applies
 
-- Analyzing or modifying Gramps XML exports (.gramps files)
-- Querying the Gramps SQLite database
-- Working with Gramps Web API
+- **Querying or modifying Gramps data via REST API** (primary method)
+- Working with Gramps Web API endpoints
+- Analyzing Gramps XML exports for bulk operations
 - Understanding Gramps data model and primitives
 - Following Gramps best practices for data entry
 

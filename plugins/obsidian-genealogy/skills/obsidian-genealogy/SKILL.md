@@ -109,6 +109,20 @@ When Gramps data changes:
 - Geographic focus: Ohio (Zanesville/Muskingum), Kentucky, Illinois
 - Origins: Irish, Scottish, German
 
+## Gramps Data Access
+
+When syncing from Gramps to Obsidian:
+
+| Operation | Recommended Method |
+|-----------|-------------------|
+| Full tree sync | XML export file or API export endpoint |
+| Single person lookup | REST API query by gramps_id |
+| Verify changes | REST API query |
+
+See `gramps` skill (gramps-tools plugin) for API authentication and endpoints.
+
+**Credentials**: `~/.config/grampsweb/credentials.json`
+
 ## Reference Materials
 
 For detailed information, see:

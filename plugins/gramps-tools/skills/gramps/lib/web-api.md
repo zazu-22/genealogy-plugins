@@ -34,9 +34,56 @@ docker compose restart
 ~/.local/share/containers/grampsweb/users/         # User database
 ```
 
+## Credentials
+
+API credentials are stored at `~/.config/grampsweb/credentials.json` (encrypted via chezmoi with age):
+
+```json
+{
+  "local": {
+    "url": "http://localhost:5000",
+    "username": "...",
+    "password": "..."
+  },
+  "remote": {
+    "url": "http://jasons-mac-studio:5000",
+    "username": "...",
+    "password": "..."
+  }
+}
+```
+
 ## Authentication
 
-### Token-Based Auth
+### Python Standard Library (Recommended)
+
+Use Python stdlib (no external dependencies) with credentials file:
+
+```python
+import json
+import urllib.request
+
+# Read credentials
+with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
+    creds = json.load(f)['local']
+
+# Get JWT token
+url = f"{creds['url']}/api/token/"
+data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
+req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+with urllib.request.urlopen(req) as resp:
+    token = json.loads(resp.read())['access_token']
+
+# Use token in subsequent requests
+headers = {"Authorization": f"Bearer {token}"}
+
+# Example: Get all people
+req = urllib.request.Request(f"{creds['url']}/api/people/", headers=headers)
+with urllib.request.urlopen(req) as resp:
+    people = json.loads(resp.read())
+```
+
+### Token-Based Auth (curl)
 ```bash
 # Get authentication token
 curl -X POST http://localhost:5000/api/token/ \
@@ -50,6 +97,13 @@ curl -X POST http://localhost:5000/api/token/ \
 ```bash
 curl http://localhost:5000/api/people/ \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+### Token Refresh
+Access tokens expire. Use the refresh token to get a new access token:
+```bash
+curl -X POST http://localhost:5000/api/token/refresh/ \
+  -H "Authorization: Bearer YOUR_REFRESH_TOKEN"
 ```
 
 ## API Endpoints

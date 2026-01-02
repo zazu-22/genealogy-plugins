@@ -215,9 +215,23 @@ For data analysis:
 sqlite3 ~/.gramps/grampsdb/tree/sqlite.db ".backup backup.db"
 ```
 
-**Recommended approach**:
+**Recommended approach** (API):
+```python
+# Export via API (see web-api.md for full auth pattern)
+import urllib.request
+
+req = urllib.request.Request(
+    f"{creds['url']}/api/exporters/gramps",
+    headers={"Authorization": f"Bearer {token}"}
+)
+with urllib.request.urlopen(req) as resp:
+    with open('export.gramps', 'wb') as f:
+        f.write(resp.read())
+```
+
+**Legacy approach** (CLI - user scripts only):
 ```bash
-# Export to XML for version control
+# Deprecated for Claude Code - use API instead
 gramps -O "Tree-Name" -e export.gramps -f gramps-xml
 ```
 

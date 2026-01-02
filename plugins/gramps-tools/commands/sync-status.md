@@ -54,7 +54,9 @@ If Gramps Web is running at `http://localhost:5000`:
 - Health check: `GET /api/health`
 - Tree info: `GET /api/trees/` (requires auth)
 
-Note: Full API access may require authentication token from keychain.
+**Credentials location**: `~/.config/grampsweb/credentials.json`
+
+See `gramps` skill > `lib/web-api.md` for authentication pattern.
 
 ## Tips
 

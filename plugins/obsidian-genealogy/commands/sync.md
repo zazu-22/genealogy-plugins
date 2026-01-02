@@ -23,9 +23,15 @@ Synchronize data from Gramps XML export to Obsidian person notes.
    - Events link to persons via `<eventref>` with `hlink` to event handle
    - Birth/death are event types within `<event type="Birth">` etc.
 
-2. **Read Gramps export**:
-   - Location: `~/Genealogy/git-exports/family-tree.gramps`
-   - Parse XML to extract persons, families, events
+   **Data Access Options:**
+   - **Bulk sync (recommended)**: Read from XML export at `~/Genealogy/git-exports/family-tree.gramps`
+   - **Fresh export via API**: Query `GET /api/exporters/gramps` (see gramps-tools plugin > `lib/web-api.md`)
+   - **Incremental updates**: Use API endpoints for specific person queries
+
+2. **Read Gramps data**:
+   - **Option A (Bulk)**: Parse XML from `~/Genealogy/git-exports/family-tree.gramps`
+   - **Option B (Fresh)**: Export via API: `GET /api/exporters/gramps` (requires auth)
+   - Extract persons, families, events from XML
 
 3. **Scan existing Obsidian notes**:
    - Location: `~/Genealogy/Obsidian/People/`

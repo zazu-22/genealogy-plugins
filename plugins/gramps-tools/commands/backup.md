@@ -8,6 +8,10 @@ argument-hint: "[--verify] [--push]"
 
 Trigger a backup of the Gramps family tree to the git-exports repository.
 
+## API-First Notice
+
+**Preferred method**: Use the API to export and back up the tree. The CLI approach below is preserved for compatibility with existing backup scripts but should not be used for new implementations.
+
 ## Options
 
 | Flag | Description |
@@ -17,25 +21,70 @@ Trigger a backup of the Gramps family tree to the git-exports repository.
 
 ## Instructions
 
-1. Check if the backup script exists at `~/.local/bin/gramps-backup.sh`
+### Preferred: API-Based Backup
 
-2. If script exists, execute it:
-   ```bash
-   ~/.local/bin/gramps-backup.sh
+1. Authenticate with Gramps Web API (see `gramps` skill > `lib/web-api.md`)
+
+2. Export via API:
+   ```python
+   import json
+   import urllib.request
+
+   # Read credentials
+   with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
+       creds = json.load(f)['local']
+
+   # Authenticate
+   data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
+   req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
+                                 headers={"Content-Type": "application/json"})
+   with urllib.request.urlopen(req) as resp:
+       token = json.loads(resp.read())['access_token']
+
+   # Export
+   req = urllib.request.Request(
+       f"{creds['url']}/api/exporters/gramps",
+       headers={"Authorization": f"Bearer {token}"}
+   )
+   with urllib.request.urlopen(req) as resp:
+       with open('/Users/jasonshaffer/Genealogy/git-exports/family-tree.gramps', 'wb') as f:
+           f.write(resp.read())
    ```
 
-3. If script doesn't exist, perform manual backup:
+3. Commit to git:
    ```bash
-   # Export from Gramps
-   gramps -O "Shaffer-Richardson" -e ~/Genealogy/git-exports/family-tree.gramps -f gramps-xml
-
-   # Commit to git
    cd ~/Genealogy/git-exports
    git add -A
    git commit -m "Backup: $(date +%Y-%m-%d)"
    ```
 
-4. If `--push` flag is set:
+### Legacy: Script-Based Backup
+
+If the backup script exists at `~/.local/bin/gramps-backup.sh`, it may be executed:
+
+```bash
+~/.local/bin/gramps-backup.sh
+```
+
+**Note**: This approach uses CLI commands which are unreliable on macOS. Prefer the API method above.
+
+### Legacy: Manual CLI Backup (Deprecated)
+
+**WARNING**: CLI is unreliable on macOS. Use only if API is unavailable.
+
+```bash
+# Export from Gramps (deprecated)
+gramps -O "Shaffer-Richardson" -e ~/Genealogy/git-exports/family-tree.gramps -f gramps-xml
+
+# Commit to git
+cd ~/Genealogy/git-exports
+git add -A
+git commit -m "Backup: $(date +%Y-%m-%d)"
+```
+
+### Push to Remote
+
+If `--push` flag is set:
    ```bash
    cd ~/Genealogy/git-exports
    git push origin main

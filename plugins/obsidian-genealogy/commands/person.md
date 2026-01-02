@@ -25,9 +25,36 @@ Create or update a person note in the Obsidian genealogy vault.
    - If creating new, use naming convention: `Firstname Lastname (birth_year-death_year).md`
 
 3. **If using --gramps-id**, extract data from Gramps:
+
+   **Option A - API (Preferred for single lookup):**
+   ```python
+   import json
+   import urllib.request
+
+   # Authenticate (see gramps-tools plugin > lib/web-api.md)
+   with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
+       creds = json.load(f)['local']
+
+   data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
+   req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
+                                 headers={"Content-Type": "application/json"})
+   with urllib.request.urlopen(req) as resp:
+       token = json.loads(resp.read())['access_token']
+
+   # Query by gramps_id
+   req = urllib.request.Request(
+       f"{creds['url']}/api/people/?gramps_id={gramps_id}",
+       headers={"Authorization": f"Bearer {token}"}
+   )
+   with urllib.request.urlopen(req) as resp:
+       person = json.loads(resp.read())[0]  # Returns list, get first match
+   ```
+
+   **Option B - XML (Fallback):**
    - Read `~/Genealogy/git-exports/family-tree.gramps`
    - Find person by handle or ID
-   - Extract: name, dates, events, family links
+
+   Extract: name, dates, events, family links
 
 4. **Create/update frontmatter**:
    ```yaml
