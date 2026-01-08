@@ -4,10 +4,11 @@
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
+        "pathPattern": "**/Genealogy/**|**/*.gramps|**/Obsidian/**",
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Check if this file write/edit was to a genealogy-related file (in ~/Genealogy/, a .gramps file, or a person/source note in Obsidian). If so, and if the content includes source citations, briefly verify they follow Evidence Explained format. If citations are present but may not follow EE style, provide a gentle reminder about proper citation format. This is advisory only - do not block the operation. Only respond if this was a genealogy file with citations.",
+            "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
             "timeout": 20
           }
         ]

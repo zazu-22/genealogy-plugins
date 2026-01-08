@@ -1,6 +1,6 @@
 {
   "name": "evidence-analysis",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Source analysis, GPS-compliant proof building, and citation generation using Evidence Explained methodology",
   "author": {
     "name": "zazu-22"
