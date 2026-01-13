@@ -33,33 +33,36 @@ Export the Gramps family tree in various formats.
 ### Preferred: API Export
 
 ```python
-import json
+from gramps_web_client import GrampsAPIClient
 import urllib.request
 
-# Read credentials
-with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
-    creds = json.load(f)['local']
+# Automatic credential loading
+client = GrampsAPIClient()
 
-# Authenticate
-data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
-req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
-                              headers={"Content-Type": "application/json"})
-with urllib.request.urlopen(req) as resp:
-    token = json.loads(resp.read())['access_token']
-headers = {"Authorization": f"Bearer {token}"}
+# Note: Export functionality not yet in GrampsAPIClient
+# Use direct API call with client's auth token:
+token = client._get_auth_token()
 
 # XML Export
-req = urllib.request.Request(f"{creds['url']}/api/exporters/gramps", headers=headers)
+req = urllib.request.Request(
+    f"{client.credentials.url}/api/exporters/gramps",
+    headers={"Authorization": f"Bearer {token}"}
+)
 with urllib.request.urlopen(req) as resp:
     with open('/Users/jasonshaffer/Genealogy/Exports/family-tree.gramps', 'wb') as f:
         f.write(resp.read())
 
 # GEDCOM Export
-req = urllib.request.Request(f"{creds['url']}/api/exporters/gedcom", headers=headers)
+req = urllib.request.Request(
+    f"{client.credentials.url}/api/exporters/gedcom",
+    headers={"Authorization": f"Bearer {token}"}
+)
 with urllib.request.urlopen(req) as resp:
     with open('/Users/jasonshaffer/Genealogy/Exports/family-tree.ged', 'wb') as f:
         f.write(resp.read())
 ```
+
+**Note**: Export endpoints will be added to GrampsAPIClient in a future update.
 
 ### Legacy: CLI Export (Deprecated)
 

@@ -23,33 +23,30 @@ Trigger a backup of the Gramps family tree to the git-exports repository.
 
 ### Preferred: API-Based Backup
 
-1. Authenticate with Gramps Web API (see `gramps` skill > `lib/web-api.md`)
+1. Use GrampsAPIClient for reliable API access (see `gramps` skill > `lib/web-api.md`)
 
 2. Export via API:
    ```python
-   import json
+   from gramps_web_client import GrampsAPIClient
+
+   # Automatic credential loading
+   client = GrampsAPIClient()
+
+   # Export to Gramps XML
+   # Note: Export functionality not yet in GrampsAPIClient
+   # Use direct API call for now:
    import urllib.request
-
-   # Read credentials
-   with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
-       creds = json.load(f)['local']
-
-   # Authenticate
-   data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
-   req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
-                                 headers={"Content-Type": "application/json"})
-   with urllib.request.urlopen(req) as resp:
-       token = json.loads(resp.read())['access_token']
-
-   # Export
+   token = client._get_auth_token()
    req = urllib.request.Request(
-       f"{creds['url']}/api/exporters/gramps",
+       f"{client.credentials.url}/api/exporters/gramps",
        headers={"Authorization": f"Bearer {token}"}
    )
    with urllib.request.urlopen(req) as resp:
        with open('/Users/jasonshaffer/Genealogy/git-exports/family-tree.gramps', 'wb') as f:
            f.write(resp.read())
    ```
+
+   **Note**: Export endpoints will be added to GrampsAPIClient in a future update.
 
 3. Commit to git:
    ```bash
