@@ -49,9 +49,22 @@ The gramps_plugins project includes a production-ready API client at:
 - **Error handling** - Comprehensive exception handling with typed errors
 - **Pagination support** - Built-in limit/offset for large datasets
 
-### Installation
+### Installation & Usage
 
-For projects in `~/Genealogy`:
+**For interactive Claude Code sessions** (ad-hoc queries, quick modifications):
+
+```bash
+cd ~/code/personal/gramps_plugins && uv run python3 -c "
+from gramps_web_client import GrampsAPIClient
+client = GrampsAPIClient()
+sources = client.get_sources()
+print(f'Total sources: {len(sources)}')
+"
+```
+
+📖 **See [lib/interactive-usage.md](lib/interactive-usage.md) for complete interactive patterns, examples, and troubleshooting.**
+
+**For dedicated projects** in `~/Genealogy`:
 
 ```bash
 cd ~/Genealogy/<project>
@@ -66,8 +79,8 @@ from gramps_web_client import GrampsAPIClient
 # Automatic credential loading
 client = GrampsAPIClient()
 
-# Fetch sources with pagination
-sources = client.get_sources(limit=10, offset=0)
+# Fetch sources (pagination may not be supported)
+sources = client.get_sources()
 
 # Update a source
 client.update_source(handle, {"title": "New Title"})
@@ -158,6 +171,7 @@ For detailed information, see:
 
 | Topic | File | Keywords |
 |-------|------|----------|
+| **Interactive Usage** | [lib/interactive-usage.md](lib/interactive-usage.md) | **claude code, ad-hoc, queries, uv run** |
 | XML Format | [lib/xml-structure.md](lib/xml-structure.md) | xml, export, elements, tags, DTD |
 | Database Schema | [lib/database-schema.md](lib/database-schema.md) | sqlite, tables, queries, SQL |
 | Web API | [lib/web-api.md](lib/web-api.md) | REST, endpoints, docker, sync |
