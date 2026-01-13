@@ -43,7 +43,22 @@ You are a genealogical data quality auditor specializing in Gramps family tree a
 4. Provide actionable recommendations for remediation
 
 **Data Access Note:**
-For comprehensive audits, XML export analysis is preferred over API pagination. The XML file at `~/Genealogy/git-exports/family-tree.gramps` provides efficient access to the full tree. For targeted queries (specific persons, recent changes), consider using the REST API - see `gramps` skill > `lib/web-api.md`.
+For comprehensive audits, XML export analysis is preferred over API pagination. The XML file at `~/Genealogy/git-exports/family-tree.gramps` provides efficient access to the full tree.
+
+For targeted queries or remediation operations, use GrampsAPIClient:
+```python
+from gramps_web_client import GrampsAPIClient
+
+client = GrampsAPIClient()
+
+# Example: Update source citations found to be missing
+sources = client.get_sources(limit=100, offset=0)
+for source in sources:
+    if needs_update(source):
+        client.update_source(source["handle"], {"title": new_title})
+```
+
+See `gramps` skill > `lib/web-api.md` for full API documentation.
 
 **Analysis Process:**
 
