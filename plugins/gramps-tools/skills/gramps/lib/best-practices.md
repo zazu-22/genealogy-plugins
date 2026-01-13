@@ -343,79 +343,96 @@ JONES_Mary_Portrait_1920.jpg
 
 ## Import/Export (API-First Workflow)
 
-### Primary Method: REST API
+### Primary Method: GrampsAPIClient
 
-All Gramps data modifications should use the REST API:
+**Always use GrampsAPIClient for Gramps Web API interactions.**
+
+All Gramps data modifications should use the GrampsAPIClient library:
 
 ```python
-import json
-import urllib.request
+from gramps_web_client import GrampsAPIClient
 
-# Read credentials and authenticate (see web-api.md for full pattern)
-with open('/Users/jasonshaffer/.config/grampsweb/credentials.json') as f:
-    creds = json.load(f)['local']
+# Automatic credential loading from ~/.config/grampsweb/credentials.json
+client = GrampsAPIClient()
 
-# Get token
-data = json.dumps({"username": creds['username'], "password": creds['password']}).encode()
-req = urllib.request.Request(f"{creds['url']}/api/token/", data=data,
-                              headers={"Content-Type": "application/json"})
-with urllib.request.urlopen(req) as resp:
-    token = json.loads(resp.read())['access_token']
-headers = {"Authorization": f"Bearer {token}"}
-
-# Create a new person
-person_data = {
-    "gramps_id": "I9999",
-    "gender": 1,  # 1=Male, 0=Female, 2=Unknown
-    "primary_name": {
-        "first_name": "John",
-        "surname_list": [{"surname": "Smith"}]
-    }
+# Create a new source
+source_data = {
+    "_class": "Source",
+    "title": "1900 United States Federal Census",
+    "author": "U.S. National Archives and Records Administration"
 }
+result = client.create_source(source_data)
+print(f"Created source with handle: {result['handle']}")
 
-req = urllib.request.Request(
-    f"{creds['url']}/api/people/",
-    data=json.dumps(person_data).encode(),
-    headers={**headers, "Content-Type": "application/json"},
-    method="POST"
-)
-with urllib.request.urlopen(req) as resp:
-    result = json.loads(resp.read())
-    print(f"Created person with handle: {result['handle']}")
+# Update a source (automatic full object merge)
+client.update_source(handle, {"title": "Updated Title"})
+
+# Get sources with pagination
+sources = client.get_sources(limit=100, offset=0)
+for source in sources:
+    print(f"{source['gramps_id']}: {source['title']}")
 ```
 
-### Export via API
+### Dry-Run Testing
 
-For bulk exports, use the API export endpoints:
+Always test migrations and bulk operations with dry-run mode first:
 
 ```python
-# Export to Gramps XML via API
-req = urllib.request.Request(
-    f"{creds['url']}/api/exporters/gramps",
-    headers=headers
-)
-with urllib.request.urlopen(req) as resp:
-    with open('export.gramps', 'wb') as f:
-        f.write(resp.read())
+# Test the operation
+client = GrampsAPIClient(dry_run=True)
+for source in sources_to_update:
+    client.update_source(source["handle"], {"title": new_title})
+    # Logs: "DRY RUN: Would update source..."
+
+# Verify the output, then execute for real
+client = GrampsAPIClient(dry_run=False)
+for source in sources_to_update:
+    client.update_source(source["handle"], {"title": new_title})
+```
+
+### Error Handling
+
+Use typed exceptions for robust error handling:
+
+```python
+from gramps_web_client import GrampsAPIClient, NotFoundError, AuthenticationError
+
+client = GrampsAPIClient()
+
+try:
+    source = client.get_source(handle)
+except NotFoundError:
+    print(f"Source {handle} not found")
+except AuthenticationError:
+    print("Authentication failed - check credentials")
+```
+
+### Real-World Example: Census Migration
+
+See production usage in `~/code/personal/gramps_plugins/tools/census_migration/`:
+
+```python
+# Example from migrator.py
+client = GrampsAPIClient(dry_run=args.dry_run)
+
+for source in sources_to_migrate:
+    # Update source title to EE-compliant format
+    new_title = f"{year} United States Federal Census - {state}"
+
+    try:
+        result = client.update_source(source["handle"], {"title": new_title})
+        print(f"✓ Updated {source['gramps_id']}")
+    except Exception as e:
+        print(f"✗ Failed to update {source['gramps_id']}: {e}")
 ```
 
 ### Undo Support
 
-API changes can be undone via transaction history:
+API changes can be undone via transaction history (requires direct API call - not yet in GrampsAPIClient):
 
 ```python
-# List recent transactions
-req = urllib.request.Request(
-    f"{creds['url']}/api/transactions/history",
-    headers=headers
-)
-
-# Undo a specific transaction
-req = urllib.request.Request(
-    f"{creds['url']}/api/transactions/history/{transaction_id}/undo",
-    headers=headers,
-    method="POST"
-)
+# For undo operations, use direct API (not yet wrapped by client)
+# See web-api.md for transaction history patterns
 ```
 
 ### Gramps CLI (Deprecated for Claude Code)
