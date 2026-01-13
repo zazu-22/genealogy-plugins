@@ -33,6 +33,59 @@ Expert knowledge for working with Gramps, the open-source genealogy application.
 
 See [lib/web-api.md](lib/web-api.md) for full API documentation.
 
+## Recommended Implementation Library
+
+**For all Gramps Web API interactions, use the GrampsAPIClient library.**
+
+The gramps_plugins project includes a production-ready API client at:
+`~/code/personal/gramps_plugins/lib/gramps_web_client/`
+
+### Why Use GrampsAPIClient
+
+- **Automatic authentication** - Loads credentials from `~/.config/grampsweb/credentials.json`
+- **JWT token refresh** - Handles expired tokens transparently
+- **Type-safe methods** - Clean, typed interfaces for common operations
+- **Dry-run mode** - Test operations safely without modifying data
+- **Error handling** - Comprehensive exception handling with typed errors
+- **Pagination support** - Built-in limit/offset for large datasets
+
+### Installation
+
+For projects in `~/Genealogy`:
+
+```bash
+cd ~/Genealogy/<project>
+uv add --editable ~/code/personal/gramps_plugins
+```
+
+### Quick Example
+
+```python
+from gramps_web_client import GrampsAPIClient
+
+# Automatic credential loading
+client = GrampsAPIClient()
+
+# Fetch sources with pagination
+sources = client.get_sources(limit=10, offset=0)
+
+# Update a source
+client.update_source(handle, {"title": "New Title"})
+
+# Dry-run mode for testing
+client = GrampsAPIClient(dry_run=True)
+client.create_source(data)  # Logs but doesn't execute
+```
+
+### Real-World Examples
+
+See production usage in:
+- `tools/census_migration/cli.py` - Census source migration
+- `tools/census_migration/migrator.py` - Bulk updates
+- `tools/census_migration/deduplicator.py` - Citation merging
+
+**Always prefer GrampsAPIClient over raw urllib/requests code.**
+
 ## Critical Limitation: Notes Cannot Have Citations
 
 **Gramps notes cannot be formally cited.** The Gramps DTD defines notes as `(text, style*, tagref*)` - there is no `citationref` element allowed. This means:
