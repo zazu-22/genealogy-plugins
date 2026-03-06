@@ -9,72 +9,10 @@ Gramps Web provides a RESTful API for programmatic access to genealogical data.
 - **Documentation**: https://gramps-project.github.io/gramps-web-api/
 - **Local endpoint**: `http://localhost:5000/api/`
 
-## Recommended: GrampsAPIClient Library
+## GrampsAPIClient
 
-**Always use GrampsAPIClient for Gramps Web API interactions.**
-
-Library location: `~/code/gramps_plugins/lib/gramps_web_client/`
-
-### Installation
-
-```bash
-cd ~/Genealogy/<project>
-uv add --editable ~/code/gramps_plugins
-```
-
-### Quick Start
-
-```python
-from gramps_web_client import GrampsAPIClient
-
-# Automatic credential loading from ~/.config/grampsweb/credentials.json
-client = GrampsAPIClient()
-
-# Get sources with pagination
-sources = client.get_sources(limit=10, offset=0)
-
-# Get specific source
-source = client.get_source(handle)
-
-# Create new source
-new_source = client.create_source({
-    "_class": "Source",
-    "title": "1900 U.S. Census"
-})
-
-# Update source (full object not required - client handles merge)
-client.update_source(handle, {"title": "Updated Title"})
-
-# Delete source
-client.delete_source(handle)
-```
-
-### Dry-Run Mode
-
-Test operations safely without modifying data:
-
-```python
-client = GrampsAPIClient(dry_run=True)
-
-# All operations log but don't execute
-client.create_source(data)  # Logs: "DRY RUN: Would create source"
-client.update_source(handle, data)  # No actual changes
-```
-
-### Error Handling
-
-```python
-from gramps_web_client import GrampsAPIClient, NotFoundError, AuthenticationError
-
-client = GrampsAPIClient()
-
-try:
-    source = client.get_source("invalid_handle")
-except NotFoundError:
-    print("Source not found")
-except AuthenticationError:
-    print("JWT token expired or invalid")
-```
+**Use GrampsAPIClient for all API interactions.** See [interactive-usage.md](interactive-usage.md) for
+full patterns (instantiation, dry-run, error handling, troubleshooting).
 
 ### Pagination
 

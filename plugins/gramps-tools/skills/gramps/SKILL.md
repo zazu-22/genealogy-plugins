@@ -36,23 +36,11 @@ See [lib/web-api.md](lib/web-api.md) for full API documentation.
 
 ## Recommended Implementation Library
 
-**For all Gramps Web API interactions, use the GrampsAPIClient library.**
+**For all Gramps Web API interactions, use the GrampsAPIClient library** at
+`~/code/gramps_plugins/lib/gramps_web_client/`. It handles authentication,
+JWT refresh, dry-run mode, and typed error handling automatically.
 
-The gramps_plugins project includes a production-ready API client at:
-`~/code/gramps_plugins/lib/gramps_web_client/`
-
-### Why Use GrampsAPIClient
-
-- **Automatic authentication** - Loads credentials from `~/.config/grampsweb/credentials.json`
-- **JWT token refresh** - Handles expired tokens transparently
-- **Type-safe methods** - Clean, typed interfaces for common operations
-- **Dry-run mode** - Test operations safely without modifying data
-- **Error handling** - Comprehensive exception handling with typed errors
-- **Pagination support** - Built-in limit/offset for large datasets
-
-### Installation & Usage
-
-**For interactive Claude Code sessions** (ad-hoc queries, quick modifications):
+**Interactive usage** (ad-hoc queries in Claude Code sessions):
 
 ```bash
 cd ~/code/gramps_plugins && uv run python3 -c "
@@ -63,43 +51,8 @@ print(f'Total sources: {len(sources)}')
 "
 ```
 
-📖 **See [lib/interactive-usage.md](lib/interactive-usage.md) for complete interactive patterns, examples, and troubleshooting.**
-
-**For dedicated projects** in `~/Genealogy`:
-
-```bash
-cd ~/Genealogy/<project>
-uv add --editable ~/code/gramps_plugins
-```
-
-### Quick Example
-
-```python
-from gramps_web_client import GrampsAPIClient
-
-# Automatic credential loading
-client = GrampsAPIClient()
-
-# Fetch sources (pagination may not be supported)
-sources = client.get_sources()
-
-# Update a source
-client.update_source(handle, {"title": "New Title"})
-
-# Dry-run mode for testing
-client = GrampsAPIClient(dry_run=True)
-client.create_source(data)  # Logs but doesn't execute
-```
-
-### Real-World Examples
-
-See production usage in:
-
-- `tools/census_migration/cli.py` - Census source migration
-- `tools/census_migration/migrator.py` - Bulk updates
-- `tools/census_migration/deduplicator.py` - Citation merging
-
-**Always prefer GrampsAPIClient over raw urllib/requests code.**
+See [lib/interactive-usage.md](lib/interactive-usage.md) for complete patterns, examples, and troubleshooting.
+See [lib/web-api.md](lib/web-api.md) for endpoint reference and raw API details.
 
 ## Critical Limitation: Notes Cannot Have Citations
 

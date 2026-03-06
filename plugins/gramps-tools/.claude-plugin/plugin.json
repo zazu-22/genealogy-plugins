@@ -1,6 +1,6 @@
 {
   "name": "gramps-tools",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Tree maintenance, backups, data quality audits, and sync verification for Gramps genealogy software",
   "author": {
     "name": "zazu-22"
