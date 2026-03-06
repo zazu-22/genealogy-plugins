@@ -49,7 +49,7 @@ req = urllib.request.Request(
     headers={"Authorization": f"Bearer {token}"}
 )
 with urllib.request.urlopen(req) as resp:
-    with open('/Users/jasonshaffer/Genealogy/Exports/family-tree.gramps', 'wb') as f:
+    with open('~/Genealogy/Exports/gramps-backups/Shaffer-Richardson-$(date).gramps', 'wb') as f:
         f.write(resp.read())
 
 # GEDCOM Export
@@ -154,4 +154,4 @@ Format: [format]
    - Vital: `certificate no. [number]`
    - Cemetery: `memorial [number] for [Name], [Cemetery]`
 
-See `docs/gedcom-gramps-field-mapping.md` for complete field mapping guidance.
+See `the data-model.md GEDCOM Field Mapping section` for complete field mapping guidance.

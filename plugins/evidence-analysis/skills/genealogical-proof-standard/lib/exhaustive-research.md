@@ -7,6 +7,7 @@ GPS Element 1: Conducting thorough research across all relevant sources.
 ### The Standard
 
 Research is "reasonably exhaustive" when you have:
+
 - Searched all sources likely to provide information
 - Extended research to related persons and places
 - Documented searches that yielded no results
@@ -48,70 +49,7 @@ Research is "reasonably exhaustive" when you have:
 | Death | Vital records, cemetery, newspaper, probate, census |
 | Identity | All available for time/place |
 
-## Source Checklist by Category
-
-### Vital Records
-- [ ] Birth certificates/registrations
-- [ ] Death certificates/registrations
-- [ ] Marriage licenses and certificates
-- [ ] Delayed birth registrations
-- [ ] State-level indexes
-
-### Census Records
-- [ ] All federal census years in lifespan
-- [ ] State/territorial censuses
-- [ ] Agricultural schedules
-- [ ] Mortality schedules
-- [ ] Slave schedules (pre-1870)
-
-### Church Records
-- [ ] Baptism/christening records
-- [ ] Marriage records
-- [ ] Burial records
-- [ ] Membership rolls
-- [ ] Confirmation records
-
-### Probate Records
-- [ ] Wills
-- [ ] Estate inventories
-- [ ] Administrations
-- [ ] Guardian records
-- [ ] Final accounts
-
-### Land Records
-- [ ] Deeds
-- [ ] Patents/grants
-- [ ] Tax lists
-- [ ] Homestead records
-
-### Military Records
-- [ ] Service records
-- [ ] Pension files
-- [ ] Draft registrations
-- [ ] Bounty land applications
-
-### Court Records
-- [ ] Civil cases
-- [ ] Criminal cases
-- [ ] Naturalizations
-- [ ] Divorces
-
-### Newspapers
-- [ ] Obituaries
-- [ ] Marriage announcements
-- [ ] Birth announcements
-- [ ] Legal notices
-
-### Cemetery Records
-- [ ] Gravestone inscriptions
-- [ ] Sexton records
-- [ ] Cemetery lot records
-
-### Other
-- [ ] City directories
-- [ ] Organizational records
-- [ ] School records
-- [ ] Hospital records
+**Note:** For a comprehensive list of record types, query the research database's `record_types` table, which is the authoritative registry for this project.
 
 ## Extending Research
 
@@ -120,16 +58,19 @@ Research is "reasonably exhaustive" when you have:
 Research the **Family, Associates, and Neighbors**:
 
 **Family**: Extended family may hold clues
+
 - Siblings and their records
 - Aunts, uncles, cousins
 - In-laws
 
 **Associates**: People connected through activity
+
 - Business partners
 - Church members
 - Organization members
 
 **Neighbors**: Proximity often means connection
+
 - Census neighbors
 - Land record neighbors
 - Witnesses on documents
@@ -137,6 +78,7 @@ Research the **Family, Associates, and Neighbors**:
 ### Cluster Research
 
 Study the entire cluster of related individuals:
+
 - Multiple records may connect
 - One person's record may name another
 - Patterns emerge from aggregate
@@ -187,12 +129,14 @@ Notes: Index may be incomplete; check county records directly
 ### Indicators of Sufficient Research
 
 **Strong indicators**:
+
 - Multiple independent sources agree
 - All obvious record types searched
 - No significant gaps in timeline
 - Research question clearly answered
 
 **Warning signs**:
+
 - Only one source type searched
 - Major record category unexplored
 - Conflicting evidence not investigated
@@ -203,6 +147,7 @@ Notes: Index may be incomplete; check county records directly
 ### When to Stop
 
 You can reasonably conclude research when:
+
 - Available sources have been searched
 - Additional searching yields diminishing returns
 - Evidence clearly supports a conclusion
@@ -211,6 +156,7 @@ You can reasonably conclude research when:
 ### Documenting Limitations
 
 Be transparent about:
+
 - Records that don't survive
 - Repositories not accessible
 - Languages you couldn't read

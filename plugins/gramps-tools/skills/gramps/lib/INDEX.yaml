@@ -23,3 +23,8 @@ files:
     title: Gramps Best Practices
     keywords: [methodology, data entry, standards, names, dates, places, sources]
     summary: Data entry standards, naming conventions, and Gramps-specific methodology
+
+  - path: interactive-usage.md
+    title: Interactive API Usage
+    keywords: [claude code, ad-hoc, queries, uv run, interactive, GrampsAPIClient]
+    summary: Patterns for using GrampsAPIClient in interactive Claude Code sessions

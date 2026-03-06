@@ -18,6 +18,7 @@ Expert knowledge for working with Gramps, the open-source genealogy application.
 | **Authentication** | JWT token via `/api/token/` |
 
 **Why API over CLI/XML:**
+
 - Gramps CLI (`gramps` command) is unreliable on macOS
 - XML import creates duplicates (adds data, doesn't merge)
 - API allows incremental, verifiable changes with undo support
@@ -38,7 +39,7 @@ See [lib/web-api.md](lib/web-api.md) for full API documentation.
 **For all Gramps Web API interactions, use the GrampsAPIClient library.**
 
 The gramps_plugins project includes a production-ready API client at:
-`~/code/personal/gramps_plugins/lib/gramps_web_client/`
+`~/code/gramps_plugins/lib/gramps_web_client/`
 
 ### Why Use GrampsAPIClient
 
@@ -54,7 +55,7 @@ The gramps_plugins project includes a production-ready API client at:
 **For interactive Claude Code sessions** (ad-hoc queries, quick modifications):
 
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 client = GrampsAPIClient()
 sources = client.get_sources()
@@ -68,7 +69,7 @@ print(f'Total sources: {len(sources)}')
 
 ```bash
 cd ~/Genealogy/<project>
-uv add --editable ~/code/personal/gramps_plugins
+uv add --editable ~/code/gramps_plugins
 ```
 
 ### Quick Example
@@ -93,6 +94,7 @@ client.create_source(data)  # Logs but doesn't execute
 ### Real-World Examples
 
 See production usage in:
+
 - `tools/census_migration/cli.py` - Census source migration
 - `tools/census_migration/migrator.py` - Bulk updates
 - `tools/census_migration/deduplicator.py` - Citation merging
@@ -108,8 +110,9 @@ See production usage in:
 - Research analysis notes require alternative approaches
 
 **Workarounds for Research Notes:**
+
 1. **Cite sources on relevant events** - If a note analyzes birth year evidence, cite those sources on the Birth event instead
-2. **Move analysis to Obsidian** - Use Obsidian for proof arguments with proper footnotes (see `obsidian-genealogy` skill)
+2. **Move analysis to markdown research files** - Use proof arguments in `research/research-projects/` with proper footnotes
 3. **Inline text references** - Add source IDs as text within the note (e.g., "per 1900 Census [S0003]")
 
 See [lib/data-model.md](lib/data-model.md#note-citation-limitation) for full details.
@@ -142,12 +145,14 @@ Gramps organizes genealogical data into **primary objects**:
 
 ### Handle System
 Every object has a unique **handle** (internal ID) used for cross-references:
+
 - Handles are stable identifiers (e.g., `_1011e191a5cf4cdac1ddc8d618bd`)
 - Links use `hlink` attribute to reference handles
 - IDs (e.g., `I0001`, `F0001`) are user-facing but not used for linking
 
 ### Source-Citation Model
 Gramps separates sources from citations:
+
 - **Source**: The document itself (e.g., "1900 U.S. Census")
 - **Citation**: Specific reference (e.g., page number, entry details)
 - One source can have many citations

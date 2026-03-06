@@ -223,67 +223,12 @@ Source: Ancestry.com digital images; accessed January 2024
 ### Software Considerations
 
 **Gramps and similar software**:
+
 - Source record: Like bibliography entry
 - Citation record: Like first reference note (page/detail)
 
 **Genealogy reports**:
+
 - First mention: Full citation
 - Repeated: Abbreviated
 
-## Converting Between Types
-
-### Source List → First Reference Note
-
-1. Reverse lead element to normal order
-2. Change periods to commas
-3. Add publication parentheses
-4. Add specific location
-5. Change to sentence capitalization
-
-**Source List**:
-```
-Mills, Elizabeth Shown. Evidence Explained. 4th ed. Baltimore:
-    Genealogical Publishing Co., 2024.
-```
-
-**First Reference Note**:
-```
-Elizabeth Shown Mills, Evidence Explained, 4th ed. (Baltimore:
-Genealogical Publishing Co., 2024), 47.
-```
-
-### First Reference → Subsequent Note
-
-1. Shorten to essential identification
-2. Keep creator (shortened)
-3. Keep title (shortened)
-4. Keep new specific location
-
-**First Reference**:
-```
-Elizabeth Shown Mills, Evidence Explained: Citing History Sources
-from Artifacts to Cyberspace, 4th ed. (Baltimore: Genealogical
-Publishing Co., 2024), 47.
-```
-
-**Subsequent**:
-```
-Mills, Evidence Explained, 52.
-```
-
-## Best Practices
-
-### Consistency
-- Choose a format and stick to it
-- Be consistent within a document
-- Adapt as needed for context
-
-### Completeness
-- Include all elements needed to locate source
-- Don't omit access dates for online sources
-- Preserve original spelling/format from sources
-
-### Clarity
-- Write for the reader who will verify
-- When in doubt, include more detail
-- Test: Could someone find this source?

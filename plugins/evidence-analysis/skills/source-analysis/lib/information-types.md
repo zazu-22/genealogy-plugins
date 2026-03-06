@@ -33,6 +33,7 @@ Information provided by someone with **firsthand knowledge** of the event.
 **Primary does not mean accurate.**
 
 Even eyewitnesses can:
+
 - Misremember
 - Be confused
 - Provide information with bias
@@ -154,58 +155,4 @@ Information where the **informant cannot be identified** or their knowledge leve
 
 ### The Time Factor
 
-```
-Event → Recording Time = Reliability Factor
-
-Same day:    ████████████████████ (High)
-Same week:   █████████████████ (Very Good)
-Same year:   ██████████████ (Good)
-Years later: ████████ (Moderate)
-Decades:     ████ (Lower)
-Generations: ██ (Suspect)
-```
-
-## Practical Application
-
-### Analysis Workflow
-
-1. **Identify the document**
-   - What kind of record is this?
-   - When was it created?
-
-2. **Identify the informant(s)**
-   - Who provided the information?
-   - Is this stated or inferred?
-
-3. **Classify each piece of information**
-   - Primary: They were there
-   - Secondary: They heard about it
-   - Indeterminate: Can't determine
-
-4. **Assess reliability**
-   - How close in time?
-   - What motivation exists?
-   - How consistent with other sources?
-
-### Recording in Research
-
-**Example notation**:
-```
-Death Certificate of John Smith (1950)
-- Death date (12 Oct 1950): PRIMARY - physician present
-- Death place (County Hospital): PRIMARY - physician recorded
-- Birth date (15 Mar 1877): SECONDARY - son as informant
-- Father's name (William Smith): SECONDARY - son as informant
-- Mother's name (Mary Jones): SECONDARY - son as informant
-```
-
-## The Genealogical Pitfall
-
-**Never assume a record is entirely primary or secondary.**
-
-Each fact within a document may have a different information type based on:
-- Who provided that specific fact
-- When they provided it
-- What they could have known
-
-**Best practice**: Analyze information types for each significant fact, not just for the document as a whole.
+Time between event and recording affects reliability: contemporary recording is most reliable, with reliability decreasing through same-year, years-later, decades-later, and generational gaps.

@@ -198,7 +198,7 @@ Digital access: Newspapers.com (http://www.newspapers.com/image/19309759/ : acce
 Digital access: FamilySearch (https://www.familysearch.org/ark:/61903/1:1:ABCD-1234 : accessed 15 Jan 2024)
 ```
 
-See `docs/gedcom-gramps-field-mapping.md` for complete GEDCOM-Gramps field mapping guidance
+See `the data-model.md GEDCOM Field Mapping section` for complete GEDCOM-Gramps field mapping guidance
 
 ## Relationship Recording
 
@@ -409,7 +409,7 @@ except AuthenticationError:
 
 ### Real-World Example: Census Migration
 
-See production usage in `~/code/personal/gramps_plugins/tools/census_migration/`:
+See production usage in `~/code/gramps_plugins/tools/census_migration/`:
 
 ```python
 # Example from migrator.py

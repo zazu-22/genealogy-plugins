@@ -11,7 +11,7 @@ files:
 
   - path: evidence-types.md
     title: Evidence Types
-    keywords: [direct, indirect, negative, implied, circumstantial, absence]
+    keywords: [direct, indirect, negative, implied, absence]
     summary: Categorizing evidence by how it answers the research question
 
   - path: evaluation-checklist.md

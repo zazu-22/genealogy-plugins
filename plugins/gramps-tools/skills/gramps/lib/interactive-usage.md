@@ -13,7 +13,7 @@ This pattern is for **Claude Code interactive sessions** where you need to:
 ## Quick Start
 
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 
 client = GrampsAPIClient()  # Auto-loads credentials
@@ -36,7 +36,7 @@ print(f'Total sources: {len(sources)}')
 ### Query Data
 
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 
 client = GrampsAPIClient()
@@ -51,7 +51,7 @@ for source in sources[:5]:
 ### Search People
 
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 
 client = GrampsAPIClient()
@@ -72,7 +72,7 @@ for person in people:
 
 ```bash
 # Step 1: Dry-run to verify
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 
 client = GrampsAPIClient(dry_run=True)  # Safe mode
@@ -89,7 +89,7 @@ print('Dry-run successful - no changes made')
 "
 
 # Step 2: Execute for real
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 
 client = GrampsAPIClient()  # Live mode
@@ -109,7 +109,7 @@ print(f'Created person with handle: {result[\"handle\"]}')
 ### Update Objects
 
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 
 client = GrampsAPIClient()
@@ -128,7 +128,7 @@ if target:
 ### Error Handling
 
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "
+cd ~/code/gramps_plugins && uv run python3 -c "
 from gramps_web_client import GrampsAPIClient
 from gramps_web_client.exceptions import GrampsAPIError
 
@@ -163,7 +163,7 @@ print(sources[:10])  # First 10
 
 ### Working Directory
 
-**Always `cd` to `~/code/personal/gramps_plugins`** before running `uv run`. This ensures:
+**Always `cd` to `~/code/gramps_plugins`** before running `uv run`. This ensures:
 - `uv` finds the `pyproject.toml` with dependencies
 - The library can be imported correctly
 
@@ -201,7 +201,7 @@ print('Line 2')
 
 **Solution:**
 ```bash
-cd ~/code/personal/gramps_plugins && uv run python3 -c "..."
+cd ~/code/gramps_plugins && uv run python3 -c "..."
 ```
 
 ### "No module named 'requests'"
@@ -219,7 +219,7 @@ cd ~/code/personal/gramps_plugins && uv run python3 -c "..."
 ## Production Examples
 
 For more complex usage, see standalone tools:
-- `~/code/personal/gramps_plugins/tools/census_migration/` - Full project structure
+- `~/code/gramps_plugins/tools/census_migration/` - Full project structure
 - Uses same GrampsAPIClient but with dedicated CLI, tests, docs
 
 ## When to Graduate to a Project

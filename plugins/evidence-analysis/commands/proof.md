@@ -16,6 +16,33 @@ Construct a Genealogical Proof Standard (GPS) compliant proof argument for a gen
 4. **Resolution of conflicts** - Addressed contradictory evidence
 5. **Sound conclusion** - Logical argument from evidence to conclusion
 
+## Database-First Evidence Inventory
+
+Before building a proof argument, query the research database for the evidence inventory:
+
+```bash
+just evidence-summary <RP-ID> <RQ>
+```
+
+Or query directly:
+```sql
+SELECT s.src_id, s.description, ec.source_type, ec.info_type, ec.evidence_type, ec.weight
+FROM evidence_classifications ec
+JOIN sources s ON ec.src_id = s.src_id
+WHERE ec.rq_id = 'RQ-N'
+ORDER BY ec.weight DESC;
+```
+
+Check for unclassified sources:
+```sql
+SELECT s.src_id, s.description
+FROM source_rq sq JOIN sources s ON sq.src_id = s.src_id
+LEFT JOIN evidence_classifications ec ON s.src_id = ec.src_id AND sq.rq_id = ec.rq_id
+WHERE sq.rq_id = 'RQ-N' AND ec.id IS NULL;
+```
+
+The database classifications are authoritative; evidence.md prose provides the analytical narrative.
+
 ## Instructions
 
 1. **Load the `genealogical-proof-standard` skill**

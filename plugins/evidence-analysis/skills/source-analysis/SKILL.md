@@ -81,9 +81,8 @@ For detailed information, see:
 | Task | Primary Skill | Supporting Skills |
 |------|--------------|-------------------|
 | Evaluate a new source | `source-analysis` | `evidence-explained` (citation format) |
-| Build proof argument | `genealogical-proof-standard` | `source-analysis`, `obsidian-genealogy` |
+| Build proof argument | `genealogical-proof-standard` | `source-analysis` |
 | Record source in Gramps | `gramps` | `source-analysis` (classification) |
-| Create research note | `obsidian-genealogy` | `source-analysis`, `genealogical-proof-standard` |
 | Set citation confidence | `gramps` | `source-analysis` (see evaluation-checklist.md) |
 
 ## Related Skills
@@ -91,4 +90,3 @@ For detailed information, see:
 - `evidence-explained` - Citation formatting methodology
 - `genealogical-proof-standard` - Applying GPS to conclusions
 - `gramps` - Recording source analysis in Gramps
-- `obsidian-genealogy` - Research notes with evidence tables

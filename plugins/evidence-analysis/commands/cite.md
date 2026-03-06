@@ -118,6 +118,37 @@ When generating citations from GEDCOM data, check **ALL** data fields in priorit
 
 See `docs/gedcom-gramps-field-mapping.md` for complete extraction patterns and code examples.
 
+## Source Registration (Dolt Database)
+
+**Pre-flight duplicate check:**
+```sql
+SELECT src_id, description FROM sources WHERE description LIKE '%keyword%';
+```
+
+**Next SRC ID:**
+```sql
+SELECT CONCAT('SRC-', LPAD(MAX(src_number) + 1, 3, '0')) AS next_id FROM sources;
+```
+
+**Register the source:**
+```sql
+INSERT INTO sources (src_id, src_number, description, record_type, year, subject, repository, status, project_id)
+VALUES ('SRC-NNN', NNN, 'Description', 'census', '1850', 'Subject Name', 'Repository', 'raw', 'RP-YYYY-NNN');
+```
+
+**Link to research questions:**
+```sql
+INSERT INTO source_rq (src_id, rq_id) VALUES ('SRC-NNN', 'RQ-1');
+```
+
+**Dolt commit:**
+```sql
+CALL DOLT_ADD('-A');
+CALL DOLT_COMMIT('-m', 'research(RP-YYYY-NNN): register SRC-NNN');
+```
+
+Use `just register <RP-ID>` to view source inventory.
+
 ## Tips
 
 - When in doubt, include more information

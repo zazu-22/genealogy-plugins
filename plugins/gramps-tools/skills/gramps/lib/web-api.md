@@ -13,13 +13,13 @@ Gramps Web provides a RESTful API for programmatic access to genealogical data.
 
 **Always use GrampsAPIClient for Gramps Web API interactions.**
 
-Library location: `~/code/personal/gramps_plugins/lib/gramps_web_client/`
+Library location: `~/code/gramps_plugins/lib/gramps_web_client/`
 
 ### Installation
 
 ```bash
 cd ~/Genealogy/<project>
-uv add --editable ~/code/personal/gramps_plugins
+uv add --editable ~/code/gramps_plugins
 ```
 
 ### Quick Start
@@ -111,7 +111,7 @@ while True:
 
 ### Real-World Examples
 
-Production usage in `~/code/personal/gramps_plugins/`:
+Production usage in `~/code/gramps_plugins/`:
 
 - **Census migration**: `tools/census_migration/cli.py`
   - Bulk source updates with dry-run validation
@@ -196,7 +196,7 @@ citation_data = {
     "page": "Page 5, Line 23",
     "confidence": 2  # Normal confidence
 }
-result = client.create_source(citation_data)  # Returns full object with handle
+result = client.create_citation(citation_data)  # Returns full object with handle
 citation_handle = result["handle"]
 
 # 2. Get event to update
@@ -380,11 +380,13 @@ GET /api/people/{handle}?profile=self,events,families
 The desktop Gramps application can sync with Gramps Web using the "Gramps Web Sync" addon.
 
 **Setup**:
+
 1. Install addon in Gramps Desktop
 2. Configure with Gramps Web URL and credentials
 3. Sync handles bidirectional updates
 
 **Conflict Resolution**:
+
 - Desktop changes take priority by default
 - Manual review for complex conflicts
 

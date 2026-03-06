@@ -72,10 +72,50 @@ Federal
 **County seat**: Zanesville
 
 **Records locations**:
+
 - Probate Court: Wills, estates, marriages
 - Recorder's Office: Deeds, land records
 - Courthouse: Court records
 - Ohio History Connection: State copies of vital records
+
+## Virginia-Specific Research
+
+### Virginia Background
+
+- Colony (1607-1776), then Commonwealth
+- County formation is critical: records follow the county that existed at the time
+- Many counties formed from parent counties; earliest records may be in the parent
+
+### Key Counties for This Project
+
+| County | Formed | From | Key Records |
+|--------|--------|------|-------------|
+| Augusta | 1745 | Orange | Will books, estate records, court orders, tax lists |
+| Hampshire | 1754 | Augusta/Frederick | Deed books, court records |
+| Hardy | 1786 | Hampshire | Deed books, will books, court records, tax lists |
+
+**Important**: Pre-1786 records for the Hardy County area are in Hampshire County.
+Pre-1754 Hampshire records are in Augusta/Frederick counties.
+
+### Virginia Vital Records
+
+| Record | Availability | Notes |
+|--------|-------------|-------|
+| Births/Deaths | 1853-1896 (spotty), 1912+ | Gap period requires church/census substitutes |
+| Marriages | Varies by county, often 1750s+ | County clerk's office; bonds, licenses, minister returns |
+
+### Key Repositories
+
+- **FamilySearch**: Extensive microfilm digitization of Virginia county records (DGS numbers for specific volumes)
+- **Library of Virginia** (Richmond): State-level copies, burned county substitutes, land office records
+- **Augusta County Courthouse**: Will books (Daniel Richardson's will at WB1 p.522), estate inventories
+- **Hardy County Courthouse**: Deed books, court record books, tax lists
+
+### Virginia Land Records
+
+- **Northern Neck Proprietary**: Fairfax grants (separate from colonial land office) — relevant for South Branch Manor area
+- **Virginia Land Office**: Patents and grants through Library of Virginia
+- **County deed books**: The primary record of land transfers after initial grant
 
 ## Research Workflow by Location
 
@@ -94,11 +134,13 @@ Federal
 ### Step 3: Locate Repositories
 
 **Primary repositories**:
+
 - County courthouse
 - State archives
 - National Archives (federal records)
 
 **Secondary access**:
+
 - FamilySearch (microfilm, digital)
 - Ancestry, FindMyPast, MyHeritage
 - Local libraries and historical societies
@@ -106,16 +148,19 @@ Federal
 ### Step 4: Access Records
 
 **In person**:
+
 - Call ahead for hours and procedures
 - Know what you're looking for
 - Bring research notes
 
 **Online**:
+
 - Check FamilySearch catalog
 - Check commercial databases
 - Check state/county websites
 
 **By mail**:
+
 - Use proper request forms
 - Include payment if required
 - Allow processing time
@@ -125,9 +170,11 @@ Federal
 ### FamilySearch Wiki
 
 For any location, check:
+
 - https://www.familysearch.org/en/wiki/
 
 Contains:
+
 - Record availability by type
 - Historical background
 - Repository information
@@ -136,6 +183,7 @@ Contains:
 ### State Archives
 
 Each state archive has:
+
 - Holdings information
 - Research guides
 - Some online records
@@ -143,6 +191,7 @@ Each state archive has:
 ### County Courthouses
 
 Still hold many original records:
+
 - Probate (wills, estates)
 - Land records
 - Marriage records
@@ -151,11 +200,13 @@ Still hold many original records:
 ### Online Catalogs
 
 **FamilySearch Catalog**:
+
 - Search by place
 - See all available microfilm/digital
 - Order microfilm to local center
 
 **WorldCat**:
+
 - Library holdings worldwide
 - Published genealogies and histories
 
@@ -262,16 +313,19 @@ NOTES:
 ### Using Local Resources
 
 **Historical societies**:
+
 - May have unique collections
 - Often have knowledgeable volunteers
 - May offer research assistance
 
 **Local libraries**:
+
 - Local history collections
 - Newspaper archives
 - City directories
 
 **Genealogical societies**:
+
 - Query columns
 - Surname indexes
 - Local expertise

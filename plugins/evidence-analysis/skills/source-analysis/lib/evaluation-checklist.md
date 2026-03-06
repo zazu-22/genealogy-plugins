@@ -16,22 +16,26 @@ Before evaluating evidence, ensure you have:
 ### For Each Source, Ask:
 
 **1. What type of source is this?**
+
 - [ ] Original record
 - [ ] Derivative (transcription, abstract, index)
 - [ ] Authored work (compilation, genealogy)
 
 **2. What is the source's provenance?**
+
 - [ ] Where did I find it?
 - [ ] What is its chain of custody?
 - [ ] Is it what it claims to be?
 
 **3. When was it created?**
+
 - [ ] At time of event (contemporaneous)
 - [ ] Shortly after event
 - [ ] Years/decades after event
 - [ ] Unknown
 
 **4. What is its condition/completeness?**
+
 - [ ] Complete and legible
 - [ ] Partially damaged or missing
 - [ ] Heavily damaged
@@ -51,12 +55,14 @@ Before evaluating evidence, ensure you have:
 ### For Each Piece of Information, Ask:
 
 **1. Who provided this information?**
+
 - [ ] Named informant with firsthand knowledge
 - [ ] Named informant with secondhand knowledge
 - [ ] Unknown informant
 - [ ] Unclear
 
 **2. What was the informant's relationship to the event?**
+
 - [ ] Participant (Primary)
 - [ ] Witness (Primary)
 - [ ] Learned from participant (Secondary)
@@ -64,6 +70,7 @@ Before evaluating evidence, ensure you have:
 - [ ] Cannot determine (Indeterminate)
 
 **3. What was the informant's motivation?**
+
 - [ ] Official duty (often reliable)
 - [ ] Personal record (usually reliable)
 - [ ] Legal requirement (check for incentives to misstate)
@@ -71,6 +78,7 @@ Before evaluating evidence, ensure you have:
 - [ ] Unknown
 
 **4. When did the informant provide this?**
+
 - [ ] At time of event
 - [ ] Within days/weeks
 - [ ] Within years
@@ -79,6 +87,7 @@ Before evaluating evidence, ensure you have:
 ### Information Reliability Indicators
 
 **Factors Increasing Reliability**:
+
 - Contemporary recording
 - Firsthand knowledge
 - No incentive to falsify
@@ -86,6 +95,7 @@ Before evaluating evidence, ensure you have:
 - Corroborated by other sources
 
 **Factors Decreasing Reliability**:
+
 - Time elapsed since event
 - Secondhand knowledge
 - Potential benefit from misstatement
@@ -97,18 +107,21 @@ Before evaluating evidence, ensure you have:
 ### For Your Research Question, Ask:
 
 **1. Does this evidence answer my question?**
+
 - [ ] Directly and explicitly
 - [ ] Indirectly (requires inference)
 - [ ] Negatively (meaningful absence)
 - [ ] Not relevant to this question
 
 **2. If indirect, what inference is required?**
+
 - [ ] Calculation (age to birth year)
 - [ ] Assumption (naming pattern to relationship)
 - [ ] Elimination (ruling out alternatives)
 - [ ] Combination (with other evidence)
 
 **3. Are there alternative interpretations?**
+
 - [ ] Only one reasonable interpretation
 - [ ] Multiple possible interpretations
 - [ ] Interpretation depends on other evidence
@@ -135,6 +148,7 @@ Create an evidence table:
 ### Resolving Conflicts
 
 For each conflict, document:
+
 1. What sources disagree?
 2. Which source is more reliable and why?
 3. What might explain the discrepancy?
@@ -153,99 +167,68 @@ For each conflict, document:
 ### Confidence Assessment
 
 **High Confidence**:
+
 - Multiple independent sources agree
 - Direct, primary evidence available
 - No unresolved conflicts
 - Alternative explanations eliminated
 
 **Moderate Confidence**:
+
 - Evidence is consistent but indirect
 - Limited source availability
 - Minor conflicts explained
 - Some alternatives possible
 
 **Low Confidence**:
+
 - Limited evidence available
 - Relies heavily on indirect/negative evidence
 - Significant conflicts unresolved
 - Multiple alternatives viable
-
-## Documentation Template
-
-For significant conclusions, document:
-
-```
-RESEARCH QUESTION:
-[State the specific question]
-
-SOURCES CONSULTED:
-1. [Source with citation]
-2. [Source with citation]
-...
-
-EVIDENCE ANALYSIS:
-Source 1:
-- Type: Original / Derivative / Authored
-- Information: Primary / Secondary / Indeterminate
-- Evidence: Direct / Indirect / Negative
-- Relevant finding: [What it says]
-- Reliability assessment: [Your evaluation]
-
-Source 2:
-[Same analysis]
-...
-
-CONFLICTS AND RESOLUTION:
-[Identify discrepancies and explain]
-
-CONCLUSION:
-[State your conclusion]
-
-CONFIDENCE LEVEL:
-High / Moderate / Low
-
-REASONING:
-[Explain how evidence supports conclusion]
-
-LIMITATIONS:
-[Note what you couldn't find or verify]
-```
 
 ## Common Evaluation Mistakes
 
 ### Avoid These Pitfalls
 
 **1. Accepting first source found**
+
 - Always seek corroboration
 - First source may be derivative or erroneous
 
 **2. Assuming official = accurate**
+
 - Officials record what they're told
 - Informants may be misinformed
 
 **3. Ignoring conflicts**
+
 - Conflicts indicate research opportunities
 - Unexplained conflicts weaken conclusions
 
 **4. Over-relying on family sources**
+
 - Family tradition valuable but often contains errors
 - Treat as clues requiring verification
 
 **5. Confirmation bias**
+
 - Don't prefer evidence that supports desired conclusion
 - Actively seek contradictory evidence
 
 **6. Treating absence as proof**
+
 - Absence requires careful evaluation
 - Many explanations for missing records
 
 **7. Not documenting negative searches**
+
 - Record what you searched and didn't find
 - Demonstrates thoroughness
 
 ## Mapping Evidence Quality to Gramps Confidence
 
-Gramps uses a 0-4 confidence scale for citations. Use this mapping to translate Mills' evidence classification to Gramps confidence levels.
+Gramps uses a 0-4 confidence scale. **Important:** Confidence is set on the *citation*, not on the source. Each citation links a specific source to a specific fact, and the confidence level reflects the quality of that particular evidence chain.
 
 ### Evidence-to-Confidence Mapping
 
@@ -264,18 +247,22 @@ Gramps uses a 0-4 confidence scale for citations. Use this mapping to translate 
 Ask these questions to determine confidence level:
 
 **Question 1: Does the source directly state the fact?**
+
 - YES = Direct evidence (start at 3)
 - NO = Indirect evidence (start at 2)
 
 **Question 2: Was the informant present at the event?**
+
 - YES = Primary information (+1 or keep)
 - NO = Secondary information (-1)
 
 **Question 3: Is this the original record or a copy?**
+
 - ORIGINAL = Original source (+1 or keep)
 - COPY = Derivative source (-1)
 
 **General Pattern:**
+
 - More "yes" answers = higher confidence
 - Default to 2 (Normal) when uncertain
 - Reserve 4 (Very High) for truly exceptional evidence

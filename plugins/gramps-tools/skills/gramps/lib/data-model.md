@@ -226,7 +226,7 @@ Example: The Times Recorder (Zanesville, Ohio), 14 Jun 1948, p. 7
 Digital access: [Website] ([URL] : accessed [Date])
 ```
 
-See `docs/gedcom-gramps-field-mapping.md` for complete guidance.
+See `the data-model.md GEDCOM Field Mapping section` for complete guidance.
 
 ## Citation
 

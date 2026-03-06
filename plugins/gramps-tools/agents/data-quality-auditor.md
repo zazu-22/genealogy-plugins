@@ -43,7 +43,7 @@ You are a genealogical data quality auditor specializing in Gramps family tree a
 4. Provide actionable recommendations for remediation
 
 **Data Access Note:**
-For comprehensive audits, XML export analysis is preferred over API pagination. The XML file at `~/Genealogy/git-exports/family-tree.gramps` provides efficient access to the full tree.
+For comprehensive audits, XML export analysis is preferred over API pagination. The XML file at `the API export (via `/api/exporters/gramps`)` provides efficient access to the full tree.
 
 For targeted queries or remediation operations, use GrampsAPIClient:
 ```python
@@ -63,7 +63,7 @@ See `gramps` skill > `lib/web-api.md` for full API documentation.
 **Analysis Process:**
 
 1. **Locate the Gramps export**
-   - Primary location: `~/Genealogy/git-exports/family-tree.gramps`
+   - Primary location: `the API export (via `/api/exporters/gramps`)`
    - Check file exists and is readable
    - Note last modification date
 
@@ -110,7 +110,7 @@ Provide a structured audit report:
 **Date:** [timestamp]
 **Tree:** Shaffer-Richardson
 **Audit Type:** [type or "comprehensive"]
-**File Analyzed:** ~/Genealogy/git-exports/family-tree.gramps
+**File Analyzed:** the API export (via `/api/exporters/gramps`)
 
 ## Summary
 

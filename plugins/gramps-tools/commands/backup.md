@@ -42,7 +42,7 @@ Trigger a backup of the Gramps family tree to the git-exports repository.
        headers={"Authorization": f"Bearer {token}"}
    )
    with urllib.request.urlopen(req) as resp:
-       with open('/Users/jasonshaffer/Genealogy/git-exports/family-tree.gramps', 'wb') as f:
+       with open('the latest backup in ~/Genealogy/Exports/gramps-backups/', 'wb') as f:
            f.write(resp.read())
    ```
 
@@ -71,7 +71,7 @@ If the backup script exists at `~/.local/bin/gramps-backup.sh`, it may be execut
 
 ```bash
 # Export from Gramps (deprecated)
-gramps -O "Shaffer-Richardson" -e ~/Genealogy/git-exports/family-tree.gramps -f gramps-xml
+gramps -O "Shaffer-Richardson" -e ~/Genealogy/Exports/gramps-backups/ -f gramps-xml
 
 # Commit to git
 cd ~/Genealogy/git-exports
@@ -104,7 +104,7 @@ Tree: Shaffer-Richardson
 ## Status: [SUCCESS/FAILED]
 
 ## Details
-- Export location: ~/Genealogy/git-exports/family-tree.gramps
+- Export location: ~/Genealogy/Exports/gramps-backups/
 - File size: [size]
 - Git commit: [hash]
 - Pushed to remote: [yes/no]

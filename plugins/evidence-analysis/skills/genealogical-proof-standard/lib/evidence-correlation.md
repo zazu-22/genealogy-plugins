@@ -5,6 +5,7 @@ GPS Element 3: Skillfully analyzing and correlating all evidence.
 ## The Standard
 
 Evidence must be:
+
 - **Analyzed**: Each piece evaluated for quality and relevance
 - **Correlated**: All pieces compared and connected
 - **Interpreted**: Meaning extracted through careful reasoning
@@ -24,6 +25,7 @@ For every source, determine:
 ### Step 2: Assess Reliability
 
 Consider for each piece of evidence:
+
 - How close in time to the event?
 - What was the informant's knowledge?
 - What motivation might affect accuracy?
@@ -44,6 +46,7 @@ Build a correlation table:
 Apply the reliability hierarchy:
 
 **More reliable** (generally):
+
 - Original over derivative
 - Primary over secondary
 - Contemporary over later
@@ -51,6 +54,7 @@ Apply the reliability hierarchy:
 - Disinterested over interested party
 
 **But context matters**:
+
 - A careful derivative may beat a damaged original
 - A motivated informant may still be accurate
 - Later record may have access to better information
@@ -90,6 +94,7 @@ providing specific date of 15 March 1850.
 ### Timeline Analysis
 
 Plot events chronologically to check for:
+
 - Impossible sequences (child born before parents married)
 - Implausible gaps (20-year gap between siblings)
 - Missing events (no death record for known deceased)
@@ -107,6 +112,7 @@ Plot events chronologically to check for:
 ### Geographic Analysis
 
 Map locations to check for:
+
 - Logical migration patterns
 - Impossible distances (Ohio one month, California next)
 - Consistent locality references
@@ -114,6 +120,7 @@ Map locations to check for:
 ### Name Pattern Analysis
 
 Track name variations to identify same person:
+
 - Spelling variants
 - Nickname usage
 - Translation effects
@@ -121,6 +128,7 @@ Track name variations to identify same person:
 ### Numerical Analysis
 
 Calculate and verify:
+
 - Ages across records (should be consistent)
 - Birth years from ages (allow for birthday timing)
 - Dates between events (pregnancies, marriages)
@@ -181,45 +189,6 @@ birth (had not yet turned 50).
 | **Probable** | Preponderance supports, some uncertainty remains |
 | **Possible** | Evidence suggests but doesn't prove |
 | **Uncertain** | Insufficient evidence for conclusion |
-
-## Documentation
-
-### Recording Your Analysis
-
-For each research question, document:
-- All sources consulted
-- What each source contributes
-- Classification of each piece of evidence
-- How conflicts were resolved
-- Reasoning leading to conclusion
-
-### Analysis Template
-
-```
-RESEARCH QUESTION:
-[State the specific question]
-
-EVIDENCE INVENTORY:
-Source 1: [citation]
-  - Information type: [Primary/Secondary/Indeterminate]
-  - Evidence type: [Direct/Indirect/Negative]
-  - Relevant content: [What it says]
-  - Reliability assessment: [Your evaluation]
-
-Source 2: [citation]
-  [Same analysis]
-
-CORRELATION:
-- Areas of agreement: [List]
-- Conflicts identified: [List with resolution]
-- Patterns observed: [List]
-
-SYNTHESIS:
-[Summary of how evidence connects]
-
-CONCLUSION:
-[Statement with confidence level]
-```
 
 ## Quality Checks
 

@@ -22,7 +22,7 @@ Run a data quality audit on the Gramps family tree to identify issues.
 
 1. Read the tree name from Gramps configuration or use default "Shaffer-Richardson"
 
-2. For the requested audit type, analyze the Gramps XML export at `~/Genealogy/git-exports/family-tree.gramps`
+2. For the requested audit type, analyze the Gramps XML export at `the API export (via `/api/exporters/gramps`)`
 
 3. Generate a summary report with:
    - Total issues found
@@ -58,7 +58,7 @@ Run a data quality audit on the Gramps family tree to identify issues.
 **Purpose**: Identify citations where Gramps `citation.page` is empty but the original GEDCOM source contains extractable data in DETA, FILN, or LOCA fields.
 
 **Requirements**:
-- Gramps XML export at `~/Genealogy/git-exports/family-tree.gramps`
+- Gramps XML export at `the API export (via `/api/exporters/gramps`)`
 - Original GEDCOM file (user must provide path)
 
 **Process**:
@@ -69,7 +69,7 @@ Run a data quality audit on the Gramps family tree to identify issues.
    - Check if corresponding GEDCOM source has DETA, FILN, or LOCA data
    - If data exists, report as "recoverable citation data"
 
-**Check priority order** (per `docs/gedcom-gramps-field-mapping.md`):
+**Check priority order** (per `the data-model.md GEDCOM Field Mapping section`):
 1. DETA - Most specific enumeration details
 2. FILN - Certificate/file numbers
 3. LOCA - Only if contains citation-level refs (microfilm, FHL)

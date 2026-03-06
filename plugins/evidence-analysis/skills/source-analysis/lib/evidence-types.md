@@ -35,6 +35,7 @@ Evidence that **explicitly answers** the research question without requiring int
 Direct evidence is **not automatically correct.**
 
 Consider:
+
 - Source quality (original vs. derivative)
 - Information quality (primary vs. secondary)
 - Potential for error or falsification
@@ -62,6 +63,7 @@ Evidence that **implies or suggests** an answer but requires interpretation, inf
 | Death 1920 | "Age 68" | Born ca. 1852 |
 
 **Note**: Calculate ranges, not exact dates:
+
 - Age 45 in June 1850 → Born June 1804 to June 1805
 
 #### Naming Patterns → Parentage
@@ -82,6 +84,7 @@ Evidence that **implies or suggests** an answer but requires interpretation, inf
 ### Building a Case with Indirect Evidence
 
 Multiple pieces of indirect evidence can establish proof when:
+
 1. Each piece is independently sourced
 2. Evidence points consistently to same conclusion
 3. Alternative explanations are considered and eliminated
@@ -110,11 +113,13 @@ Evidence derived from the **absence of information** where it would reasonably b
 ### Using Negative Evidence
 
 **Strong negative evidence**:
+
 - Comprehensive, well-preserved records
 - Clear expectation person would appear
 - No alternative explanation for absence
 
 **Weak negative evidence**:
+
 - Incomplete records
 - Record survival issues
 - Multiple possible explanations
@@ -132,99 +137,3 @@ Evidence derived from the **absence of information** where it would reasonably b
 #### Identity Elimination
 - Searching for "John Smith" born ca. 1800
 - Found one "John Smith" who died 1810 → eliminate as candidate
-
-## Circumstantial Evidence
-
-### Relationship to Indirect Evidence
-
-Circumstantial evidence is a broader term that includes:
-- Indirect evidence
-- Negative evidence
-- Pattern evidence
-- Contextual evidence
-
-### Pattern Evidence
-- Multiple families with same surnames intermarrying
-- Consistent geographic clustering
-- Similar occupational patterns
-
-### Contextual Evidence
-- Historical events explaining migration
-- Economic conditions affecting records
-- Community structure patterns
-
-## Evidence Correlation
-
-### The Analysis Process
-
-1. **Gather evidence** from multiple independent sources
-2. **Classify each piece**: Direct or indirect? Primary or secondary?
-3. **Assess quality**: How reliable is each piece?
-4. **Identify conflicts**: Do any sources disagree?
-5. **Resolve conflicts**: Explain discrepancies
-6. **Reach conclusion**: Based on preponderance of evidence
-
-### Weighing Evidence
-
-| Factor | Stronger | Weaker |
-|--------|----------|--------|
-| Source | Original | Derivative |
-| Information | Primary | Secondary |
-| Evidence | Direct | Indirect |
-| Time | Contemporary | Later |
-| Independence | Separate creation | Common source |
-
-### When Evidence Conflicts
-
-**Don't ignore conflicts.** Address them by:
-
-1. Identifying which evidence is more reliable and why
-2. Explaining possible reasons for the discrepancy
-3. Acknowledging if resolution isn't possible
-4. Documenting your reasoning
-
-**Common conflict sources**:
-- Different informants with different knowledge
-- Recording errors
-- Intentional misstatements (age, marriage status)
-- Calculation vs. memory
-
-## Practical Examples
-
-### Example 1: Establishing Birth Date
-
-**Question**: When was Mary Smith born?
-
-| Source | Evidence Type | Information |
-|--------|---------------|-------------|
-| Birth certificate | Direct | 15 Mar 1875 |
-| 1880 Census | Indirect | Age 5 → ca. 1875 |
-| Death certificate | Direct but secondary | 14 Mar 1875 |
-| Gravestone | Direct but derivative | 1875 |
-
-**Analysis**: Birth certificate provides direct, primary evidence. Other sources corroborate. Minor discrepancy on day (14 vs 15) may be recording error on death certificate.
-
-### Example 2: Proving Parentage
-
-**Question**: Who were the parents of James Wilson?
-
-| Source | Evidence Type | Information |
-|--------|---------------|-------------|
-| Birth record | Direct | Parents: Robert Wilson and Ann Jones |
-| Father's will | Direct | Names son James |
-| 1850 Census | Indirect | James (age 10) in Robert Wilson household |
-
-**Analysis**: Multiple direct statements from independent sources establish parentage.
-
-### Example 3: Using Negative Evidence
-
-**Question**: When did Thomas Brown die?
-
-| Source | Evidence | Information |
-|--------|----------|-------------|
-| 1860 Census | Presence | Living in County X |
-| 1870 Census | Absence | Not found in County X or surrounding |
-| Wife's 1875 deed | Indirect | "widow of Thomas Brown" |
-| Searched all obituaries 1860-1870 | Negative | No obituary found |
-
-**Analysis**: Negative evidence (absence from 1870) combined with indirect evidence (widow designation by 1875) suggests death between 1860-1875. Obituary search negative but not conclusive if newspaper records incomplete.

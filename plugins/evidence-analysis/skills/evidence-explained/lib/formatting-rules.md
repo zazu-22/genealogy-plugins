@@ -31,16 +31,19 @@ Smith, John. Title. Place: Publisher, 2024.
 ### Special Cases
 
 **Parentheses**:
+
 - Publication data: (Baltimore: Publisher, 2024)
 - Access information: (https://www.example.com : accessed [date])
 - Clarifications: (penned), (stamped)
 
 **Brackets**:
+
 - Editorial additions: [sic], [illegible], [1850?]
 - Missing information supplied: [Ohio]
 - Uncertain readings: [Mary?]
 
 **Quotation marks**:
+
 - Article and chapter titles
 - Unpublished documents
 - Database names within larger platforms
@@ -68,28 +71,34 @@ Ancestry.com (website - italic)
 ### Creator Names
 
 **Single author**:
+
 - Note: John Smith, Title...
 - Bibliography: Smith, John. Title...
 
 **Multiple authors**:
+
 - Note: John Smith and Jane Doe, Title...
 - Bibliography: Smith, John, and Jane Doe. Title...
 
 **Corporate author**:
+
 - Ohio Department of Health, certificate...
 - National Archives, pension file...
 
 **No author**:
+
 - Lead with title
 - "Article Title," Source...
 
 ### Personal Names in Content
 
 **Preserve original spelling**:
+
 - John SMITH (if caps in original)
 - Mary Jones or JONES (as recorded)
 
 **Standardize for indexing**:
+
 - SURNAME, Given names
 - Cross-reference variants
 
@@ -146,6 +155,7 @@ John Smith (1850–1925)
 **Unnumbered**: [p. 3] or unpaged
 
 **Census pages**:
+
 - Penned vs. stamped: p. 123 (penned)
 - Both numbers: p. 123A (penned), stamped 246
 
@@ -171,12 +181,14 @@ Journal 15 (2): 45
 
 ### Title Case
 Use for:
+
 - Book titles
 - Article titles
 - Database names
 - Repository names
 
 **Rules**:
+
 - Capitalize major words
 - Lowercase articles (a, an, the) unless first word
 - Lowercase prepositions unless first word
@@ -184,11 +196,13 @@ Use for:
 
 ### Sentence Case
 Use for:
+
 - Descriptive elements in notes
 - Running text
 
 ### Preserve Original Capitalization
 When:
+
 - Quoting directly from source
 - Recording names as written
 - Reproducing titles exactly
@@ -234,47 +248,6 @@ National Archives and Records Administration
 NARA
 ```
 
-## Special Characters
-
-### Handling Non-Standard Characters
-
-**Original character available**:
-- Use: ü, ñ, ø
-- Preserve diacritical marks
-
-**Character unavailable**:
-- Use closest equivalent: u for ü
-- Note in brackets: [u-umlaut]
-
-### Formatting Marks
-
-**Illegible text**: [illegible]
-**Missing text**: [...] or [missing]
-**Editorial comment**: [sic]
-**Uncertain reading**: [word?]
-
-## Quotations
-
-### Direct Quotes
-
-**Short quotes** (under 40 words): In quotation marks, inline
-```
-The record states "John Smith, age 45, born Ohio."
-```
-
-**Long quotes** (40+ words): Block format, no quotation marks
-```
-The document continues:
-    [indented block of quoted text without quotation marks]
-```
-
-### Preserving Original Text
-
-- Maintain original spelling
-- Maintain original punctuation
-- Use [sic] sparingly for obvious errors
-- Note illegible portions
-
 ## Electronic Formatting
 
 ### URLs
@@ -299,15 +272,3 @@ The document continues:
 Find A Grave, database and images
 ```
 
-## Common Formatting Errors
-
-### Avoid
-
-| Error | Correction |
-|-------|------------|
-| ibid | Ibid. (italicized, with period) |
-| page 45-47 | pp. 45–47 (en-dash, not hyphen) |
-| accessed on | accessed (no "on") |
-| Retrieved from | accessed (Evidence Explained style) |
-| n.d. for access date | Always include access date |
-| Mixing note and bibliography format | Be consistent |

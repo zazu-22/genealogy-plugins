@@ -85,6 +85,33 @@ Classify a genealogical source according to Evidence Explained methodology and e
 - [What to look for to corroborate]
 ```
 
+## Database Registration
+
+After classification, register the GPS analysis in the research database.
+
+**Pre-flight check:**
+```sql
+SELECT * FROM evidence_classifications WHERE src_id = 'SRC-NNN';
+```
+
+**INSERT template (one row per research question):**
+```sql
+INSERT INTO evidence_classifications (src_id, rq_id, source_type, info_type, evidence_type, weight)
+VALUES ('SRC-NNN', 'RQ-N', 'original', 'primary', 'direct', 'High');
+-- source_type: original | derivative | authored
+-- info_type: primary | secondary | undetermined
+-- evidence_type: direct | indirect | negative
+-- weight: High | Medium | Low | Negative | Undetermined
+```
+
+**Dolt commit:**
+```sql
+CALL DOLT_ADD('-A');
+CALL DOLT_COMMIT('-m', 'research(RP-YYYY-NNN): classify SRC-NNN');
+```
+
+Use `just eval-backlog <RP-ID>` to see sources needing classification.
+
 ## Tips
 
 - A source can have different classifications for different facts

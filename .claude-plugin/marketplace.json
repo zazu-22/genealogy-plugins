@@ -25,8 +25,9 @@
     },
     {
       "name": "obsidian-genealogy",
-      "source": "./plugins/obsidian-genealogy",
-      "description": "Obsidian vault integration for genealogy research notes"
+      "source": "./disabled/obsidian-genealogy",
+      "description": "ARCHIVED: Obsidian vault integration (dormant, research migrated to markdown + Dolt)",
+      "disabled": true
     }
   ]
 }
