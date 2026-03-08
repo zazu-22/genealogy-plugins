@@ -1,0 +1,15 @@
+files:
+  - path: newspapers-reference.md
+    title: Chronicling America Newspapers Reference
+    keywords: [newspapers, chronicling-america, chronam, OCR, search, proximity, pages]
+    summary: Complete reference for searching Chronicling America newspaper pages via loc.gov API
+
+  - path: collections-reference.md
+    title: loc.gov Collections Reference
+    keywords: [manuscripts, maps, photos, collections, loc.gov, library-of-congress, facets]
+    summary: Reference for searching loc.gov digital collections — manuscripts, maps, photos
+
+  - path: rate-limits.md
+    title: loc.gov Rate Limiting
+    keywords: [rate-limit, throttle, block, 429, loc.gov, sliding-window]
+    summary: Rate limit details, enforcement behavior, and built-in rate limiter configuration

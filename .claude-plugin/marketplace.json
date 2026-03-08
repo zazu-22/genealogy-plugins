@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Genealogy research plugins for Gramps, Evidence Explained, GPS methodology, and Obsidian integration",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
@@ -24,10 +24,9 @@
       "description": "Source analysis, GPS-compliant proof building, citation generation"
     },
     {
-      "name": "obsidian-genealogy",
-      "source": "./disabled/obsidian-genealogy",
-      "description": "ARCHIVED: Obsidian vault integration (dormant, research migrated to markdown + Dolt)",
-      "disabled": true
+      "name": "data-sources",
+      "source": "./plugins/data-sources",
+      "description": "Free data source integrations — WikiTree profiles, Chronicling America newspapers, loc.gov collections"
     }
   ]
 }

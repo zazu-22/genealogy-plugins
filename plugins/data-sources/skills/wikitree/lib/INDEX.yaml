@@ -1,0 +1,10 @@
+files:
+  - path: api-reference.md
+    title: WikiTree API Reference
+    keywords: [wikitree, api, search, person, ancestors, descendants, bio, relatives]
+    summary: Complete reference for WikiTree Apps API actions, parameters, and response formats
+
+  - path: search-patterns.md
+    title: WikiTree Search Patterns
+    keywords: [wikitree, search, strategy, genealogy, surname, location, family]
+    summary: Effective search strategies for genealogical research using WikiTree
