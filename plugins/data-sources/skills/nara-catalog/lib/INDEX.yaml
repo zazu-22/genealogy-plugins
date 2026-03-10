@@ -1,0 +1,10 @@
+files:
+  - path: api-reference.md
+    title: NARA Catalog API v2 Reference
+    keywords: [nara, catalog, api, search, records, naId, digital-objects, record-groups]
+    summary: Complete reference for NARA Catalog API v2 search endpoint, parameters, and response structure
+
+  - path: record-groups.md
+    title: Genealogical Record Groups Reference
+    keywords: [record-group, pension, census, military, land, immigration, draft, bounty-land]
+    summary: NARA Record Group numbers and content relevant to genealogical research
