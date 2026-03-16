@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Genealogy research plugins for Gramps, Evidence Explained, GPS methodology, and Obsidian integration",
-    "version": "0.4.0"
+    "version": "0.5.0"
   },
   "plugins": [
     {
