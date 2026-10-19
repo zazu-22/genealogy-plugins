@@ -7,7 +7,7 @@
         "hooks": [
           { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/run-genealogy-hook.py\" governance-arrival.sh", "timeout": 15 },
           { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/run-genealogy-hook.py\" journal-last-entry.sh", "timeout": 15 },
-          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/run-genealogy-hook.py\" compact-recovery.mjs", "timeout": 20 },
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/run-genealogy-hook.py\" compact-recovery.mjs", "timeout": 40 },
           { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/run-genealogy-hook.py\" --install-git-hooks", "timeout": 15 }
         ]
       }

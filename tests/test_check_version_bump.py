@@ -80,6 +80,21 @@ class CheckVersionBumpTest(unittest.TestCase):
         self.commit("docs")
         self.assertEqual(self.check().returncode, 0)
 
+    def test_skill_moved_between_plugins_flags_both(self) -> None:
+        self.write_plugin("beta", "1.0.0")
+        self.write("plugins/beta/hooks/hooks.json", "{}")
+        self.write_marketplace("0.1.0", ["alpha", "beta"])
+        self.git("add", "-A")
+        self.git("commit", "-qm", "beta")
+        self.git("branch", "-f", "main")
+        (self.repo / "plugins/beta/skills").mkdir(parents=True)
+        self.git("mv", "plugins/alpha/skills/a", "plugins/beta/skills/a")
+        self.write_plugin("beta", "1.1.0")
+        self.commit("move skill")
+        result = self.check()
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("alpha", result.stdout)
+
     def test_new_plugin_requires_marketplace_bump(self) -> None:
         self.write_plugin("beta", "0.1.0")
         self.write("plugins/beta/hooks/hooks.json", "{}")

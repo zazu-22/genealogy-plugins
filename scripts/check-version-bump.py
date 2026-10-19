@@ -8,8 +8,9 @@ local Claude session started in this repo. Implements the CLAUDE.md
 - A plugin whose functional files changed must raise `version` in
   plugins/<name>/.claude-plugin/plugin.json above the base version. A plugin
   that did not exist at the base passes (its first version is its bump).
-- Adding or removing a marketplace plugin (the `plugins` list in
-  .claude-plugin/marketplace.json) must raise `metadata.version` there.
+- Any change to .claude-plugin/marketplace.json other than its version
+  (adding or removing plugins, marketplace-level configuration) must raise
+  `metadata.version` there.
 
 Functional: anything under a plugin's skills/, commands/, agents/, hooks/,
 lib/, scripts/, or .claude-plugin/ (other than plugin.json itself), its
@@ -101,14 +102,18 @@ def version_problem(base: str, head: str, plugin: str) -> str | None:
 
 def marketplace_problem(base: str, head: str) -> str | None:
     old, new = read_json(base, MARKETPLACE) or {}, read_json(head, MARKETPLACE) or {}
-    listing = lambda doc: sorted((p.get("name"), p.get("source")) for p in doc.get("plugins", []))
-    if listing(old) == listing(new):
+    def config(doc: dict) -> str:
+        doc = json.loads(json.dumps(doc))
+        doc.get("metadata", {}).pop("version", None)
+        return json.dumps(doc, sort_keys=True)
+
+    if config(old) == config(new):
         return None
     old_v = semver(old.get("metadata", {}).get("version"))
     new_v = semver(new.get("metadata", {}).get("version"))
     if new_v is None or (old_v is not None and new_v <= old_v):
         return (
-            f"marketplace: plugin list changed but metadata.version "
+            f"marketplace: configuration changed but metadata.version "
             f"{new.get('metadata', {}).get('version')} is not above "
             f"{old.get('metadata', {}).get('version')}; bump {MARKETPLACE}"
         )
@@ -122,7 +127,9 @@ def main() -> int:
     args = parser.parse_args()
 
     merge_base = git("merge-base", args.base, args.head).stdout.strip()
-    paths = git("diff", "--name-only", f"{merge_base}..{args.head}").stdout.split()
+    # --no-renames: a skill moved between plugins changes both plugins.
+    out = git("diff", "--name-only", "--no-renames", "-z", f"{merge_base}..{args.head}").stdout
+    paths = [p for p in out.split("\0") if p]
     problems = [p for p in (version_problem(merge_base, args.head, name) for name in sorted(changed_plugins(paths))) if p]
     market = marketplace_problem(merge_base, args.head)
     if market:
