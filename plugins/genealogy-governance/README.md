@@ -20,6 +20,7 @@ stderr, and exit code passed through unchanged.
 | TaskCompleted | `task-completed-qc.py` (exit 2 blocks) |
 | SubagentStart | `subagent-start-governance.sh` |
 | PostToolUse `Agent` | `governance-concern-handler.sh` |
+| SubagentStop, Stop | `governance-background-concern.py` (records a background subagent's concern, delivers it at the parent's next Stop; inert until the clone has the script) |
 
 `PreCompact` (`pre-compact.mjs`) is left out: it copies the transcript into the
 clone, which an ephemeral container discards.
