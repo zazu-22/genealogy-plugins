@@ -99,9 +99,14 @@ def install_git_hooks(clone: Path, event: str) -> int:
             "Run `python3 scripts/check-tree-exports.py` before each commit."
         )
         return 0
-    result = subprocess.run(
-        ["bash", str(installer)], cwd=clone, capture_output=True, text=True, check=False
-    )
+    try:
+        result = subprocess.run(
+            ["bash", str(installer)], cwd=clone, capture_output=True, text=True, check=False
+        )
+    except OSError as error:
+        log(event, "--install-git-hooks", clone, f"spawn-failed={type(error).__name__}")
+        print(f"genealogy-governance: pre-commit export guard NOT installed: {error}")
+        return 0
     log(event, "--install-git-hooks", clone, f"exit={result.returncode}")
     if result.returncode != 0:
         detail = (result.stderr or result.stdout).strip()
@@ -154,7 +159,11 @@ def main() -> int:
 
     command = INTERPRETERS.get(script.suffix, []) + [str(script)]
     env = dict(os.environ, CLAUDE_PROJECT_DIR=str(clone))
-    result = subprocess.run(command, input=payload, cwd=clone, env=env, capture_output=True, check=False)
+    try:
+        result = subprocess.run(command, input=payload, cwd=clone, env=env, capture_output=True, check=False)
+    except OSError as error:
+        log(event, target, clone, f"spawn-failed={type(error).__name__}")
+        return 0
     sys.stdout.buffer.write(result.stdout)
     sys.stderr.buffer.write(result.stderr)
     log(event, target, clone, f"exit={result.returncode}")

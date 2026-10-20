@@ -95,6 +95,16 @@ class CheckVersionBumpTest(unittest.TestCase):
         self.assertEqual(result.returncode, 1, result.stdout)
         self.assertIn("alpha", result.stdout)
 
+    def test_manifest_field_change_without_bump_fails(self) -> None:
+        doc = {"name": "alpha", "version": "1.0.0", "hooks": "./hooks/extra.json"}
+        self.write("plugins/alpha/.claude-plugin/plugin.json", json.dumps(doc))
+        self.commit("manifest hooks field")
+        self.assertEqual(self.check().returncode, 1)
+        doc["version"] = "1.0.1"
+        self.write("plugins/alpha/.claude-plugin/plugin.json", json.dumps(doc))
+        self.commit("bump")
+        self.assertEqual(self.check().returncode, 0)
+
     def test_new_plugin_requires_marketplace_bump(self) -> None:
         self.write_plugin("beta", "0.1.0")
         self.write("plugins/beta/hooks/hooks.json", "{}")

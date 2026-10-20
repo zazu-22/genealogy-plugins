@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -83,6 +84,7 @@ class RunGenealogyHookTest(unittest.TestCase):
 
     def test_no_clone_is_silent_success(self) -> None:
         elsewhere = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, elsewhere, True)
         result = subprocess.run(
             ["python3", str(WRAPPER), "echo.py"],
             input=json.dumps({"cwd": elsewhere}),
@@ -119,6 +121,21 @@ class RunGenealogyHookTest(unittest.TestCase):
         (scripts / "install-git-hooks.sh").write_text("#!/bin/bash\necho installed\n")
         result = self.run_wrapper("--install-git-hooks", {"cwd": str(self.root)})
         self.assertEqual((result.returncode, result.stdout), (0, ""))
+
+    def test_install_reports_failed_installer(self) -> None:
+        scripts = self.clone / "scripts"
+        scripts.mkdir()
+        (scripts / "install-git-hooks.sh").write_text("#!/bin/bash\necho installer failed >&2\nexit 1\n")
+        result = self.run_wrapper("--install-git-hooks", {"cwd": str(self.root)})
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("NOT installed", result.stdout)
+        self.assertIn("installer failed", result.stdout)
+
+    def test_missing_interpreter_fails_open(self) -> None:
+        (self.clone / ".claude" / "hooks" / "noexec.bin").write_text("data\n")  # no interpreter, no +x
+        result = self.run_wrapper("noexec.bin", {"cwd": str(self.root)})
+        self.assertEqual((result.returncode, result.stdout), (0, ""))
+        self.assertIn("spawn-failed=PermissionError", self.log_lines()[-1])
 
 
 if __name__ == "__main__":

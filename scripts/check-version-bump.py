@@ -13,8 +13,8 @@ local Claude session started in this repo. Implements the CLAUDE.md
   `metadata.version` there.
 
 Functional: anything under a plugin's skills/, commands/, agents/, hooks/,
-lib/, scripts/, or .claude-plugin/ (other than plugin.json itself), its
-.mcp.json, and code or JSON files anywhere in the plugin. Not functional:
+lib/, scripts/, or .claude-plugin/, its .mcp.json, any plugin.json field
+other than `version`, and code or JSON files anywhere in the plugin. Not functional:
 README*, CHANGELOG*, docs/, disabled/, other top-level markdown or text.
 Unlike the local hook, a SKILL.md or command .md edit counts as functional,
 as CLAUDE.md requires.
@@ -82,6 +82,18 @@ def changed_plugins(paths: list[str]) -> set[str]:
     return names
 
 
+def manifest_changed(base: str, head: str, plugin: str) -> bool:
+    """True when plugin.json changed in anything other than `version` (hooks, mcpServers, ...)."""
+    path = f"plugins/{plugin}/.claude-plugin/plugin.json"
+    old, new = read_json(base, path), read_json(head, path)
+    if new is None:
+        return False  # plugin removed; the marketplace check covers it
+    if old is None:
+        return True  # new plugin; validate its first version
+    strip = lambda doc: {k: v for k, v in doc.items() if k != "version"}
+    return strip(old) != strip(new)
+
+
 def version_problem(base: str, head: str, plugin: str) -> str | None:
     path = f"plugins/{plugin}/.claude-plugin/plugin.json"
     new = read_json(head, path)
@@ -130,7 +142,12 @@ def main() -> int:
     # --no-renames: a skill moved between plugins changes both plugins.
     out = git("diff", "--name-only", "--no-renames", "-z", f"{merge_base}..{args.head}").stdout
     paths = [p for p in out.split("\0") if p]
-    problems = [p for p in (version_problem(merge_base, args.head, name) for name in sorted(changed_plugins(paths))) if p]
+    plugins = changed_plugins(paths)
+    for path in paths:
+        match = re.fullmatch(r"plugins/([^/]+)/\.claude-plugin/plugin\.json", path)
+        if match and manifest_changed(merge_base, args.head, match.group(1)):
+            plugins.add(match.group(1))
+    problems = [p for p in (version_problem(merge_base, args.head, name) for name in sorted(plugins)) if p]
     market = marketplace_problem(merge_base, args.head)
     if market:
         problems.append(market)
@@ -140,7 +157,7 @@ def main() -> int:
         for problem in problems:
             print(f"  - {problem}")
         return 1
-    print(f"check-version-bump: ok ({len(paths)} changed files, plugins changed: {', '.join(sorted(changed_plugins(paths))) or 'none'})")
+    print(f"check-version-bump: ok ({len(paths)} changed files, plugins changed: {', '.join(sorted(plugins)) or 'none'})")
     return 0
 
 
