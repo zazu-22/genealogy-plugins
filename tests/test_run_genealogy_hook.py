@@ -18,9 +18,12 @@ from pathlib import Path
 WRAPPER = Path(__file__).resolve().parents[1] / "plugins/genealogy-governance/scripts/run-genealogy-hook.py"
 
 
-def make_clone(root: Path) -> Path:
+def make_clone(root: Path, origin: str | None = "https://github.com/zazu-22/genealogy") -> Path:
     clone = root / "genealogy"
     (clone / "governance" / "codes").mkdir(parents=True)
+    if origin is not None:
+        subprocess.run(["git", "init", "-q", str(clone)], check=True)
+        subprocess.run(["git", "-C", str(clone), "remote", "add", "origin", origin], check=True)
     (clone / ".claude" / "hooks").mkdir(parents=True)
     (clone / "AGENTS.md").write_text("# AGENTS.md\n")
     echo = clone / ".claude" / "hooks" / "echo.py"
@@ -92,6 +95,31 @@ class RunGenealogyHookTest(unittest.TestCase):
             env={**self.env, "CLAUDE_PROJECT_DIR": elsewhere}, check=False,
         )
         self.assertEqual((result.returncode, result.stdout), (0, ""))
+
+    def test_ignores_shaped_directory_that_is_not_a_git_root(self) -> None:
+        decoy_parent = self.root / "other-repo"
+        make_clone(decoy_parent, origin=None)  # committed inside another repo: no .git of its own
+        start = decoy_parent / "src"
+        start.mkdir()
+        result = self.run_wrapper("echo.py", {"cwd": str(start)}, CLAUDE_PROJECT_DIR=str(start))
+        self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(self.clone))
+
+    def test_ignores_checkout_with_another_origin(self) -> None:
+        for origin in ("https://github.com/zazu-22/genealogy-plugins", "https://github.com/someone/genealogy"):
+            with self.subTest(origin=origin):
+                other = Path(tempfile.mkdtemp()).resolve()
+                self.addCleanup(shutil.rmtree, other, True)
+                make_clone(other, origin=origin)
+                result = self.run_wrapper("echo.py", {"cwd": str(other)}, CLAUDE_PROJECT_DIR=str(other))
+                # The decoy is passed over; the process-cwd fallback reaches the real clone.
+                self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(self.clone))
+
+    def test_explicit_override_skips_origin_check(self) -> None:
+        fork = Path(tempfile.mkdtemp()).resolve()
+        self.addCleanup(shutil.rmtree, fork, True)
+        clone = make_clone(fork, origin="git@github.com:someone/genealogy.git")
+        result = self.run_wrapper("echo.py", {"cwd": str(fork)}, GENEALOGY_REPO_DIR=str(clone))
+        self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(clone))
 
     def test_skips_when_clone_settings_already_register_the_script(self) -> None:
         (self.clone / ".claude" / "settings.json").write_text(

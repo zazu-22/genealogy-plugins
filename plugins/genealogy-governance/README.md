@@ -30,9 +30,13 @@ clone, which an ephemeral container discards.
 - **No double runs.** If `CLAUDE_PROJECT_DIR` is the clone and its
   `settings.json` already registers the script (a session started inside the
   clone, as on the Mac), the wrapper does nothing.
+- **Identity, not just shape.** A discovered clone must be a git checkout
+  (its own `.git`) whose `origin` is `zazu-22/genealogy`. A directory committed
+  inside another repo that merely looks like the clone is never run.
 - **Fail-open**, like the scripts: no clone found means exit 0 and no output.
 - **Kill switch:** `GENEALOGY_GOVERNANCE_DISABLE=1`.
-- **Override location:** `GENEALOGY_REPO_DIR=/path/to/genealogy`.
+- **Override location:** `GENEALOGY_REPO_DIR=/path/to/genealogy` (trusted as
+  given; use it for a fork or another remote).
 
 ## Checking that it fired
 

@@ -20,8 +20,11 @@ Fail-open like the scripts it wraps: if no clone is found, or the clone's own
 settings.json already registers this script for the session's project
 directory (a Mac session started inside the clone), it exits 0 silently.
 
-Kill switch: GENEALOGY_GOVERNANCE_DISABLE=1. Override the clone location with
-GENEALOGY_REPO_DIR. Each invocation appends one line to
+A discovered clone must be a git checkout whose origin is zazu-22/genealogy;
+directory markers alone are not trusted. GENEALOGY_REPO_DIR names a clone
+explicitly (a fork, or another remote) and skips that origin check.
+
+Kill switch: GENEALOGY_GOVERNANCE_DISABLE=1. Each invocation appends one line to
 $XDG_STATE_HOME/genealogy-governance/hooks.log (default ~/.local/state/...) so
 a thread can confirm the hooks fired.
 """
@@ -30,12 +33,14 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import time
 from pathlib import Path
 
 INTERPRETERS = {".py": ["python3"], ".mjs": ["node"], ".js": ["node"], ".sh": ["bash"]}
+ORIGIN = re.compile(r"[:/]zazu-22/genealogy(\.git)?/?$")
 
 
 def is_genealogy_root(path: Path) -> bool:
@@ -46,15 +51,37 @@ def is_genealogy_root(path: Path) -> bool:
     )
 
 
-def find_clone(starts: list[str]) -> Path | None:
-    """Walk up from each start; at each level try the dir and its genealogy/ child."""
+def is_genealogy_checkout(path: Path) -> bool:
+    """A git root (not a directory committed inside another repo) whose origin is zazu-22/genealogy.
+
+    Markers alone are not identity: any repo could commit a directory shaped
+    like the clone. A tree cannot contain a .git entry, so requiring one here
+    rules that out.
+    """
+    if not (path / ".git").exists():
+        return False
+    try:
+        url = subprocess.run(
+            ["git", "-C", str(path), "config", "--get", "remote.origin.url"],
+            capture_output=True, text=True, check=False, timeout=5,
+        ).stdout.strip()
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return bool(ORIGIN.search(url))
+
+
+def find_clone(override: str, starts: list[str]) -> Path | None:
+    """Use GENEALOGY_REPO_DIR as given, else walk up from each start, trying each dir and its genealogy/ child."""
+    if override and os.path.isdir(override):
+        path = Path(override).resolve()
+        return path if is_genealogy_root(path) else None
     for start in starts:
         if not start or not os.path.isdir(start):
             continue
         current = Path(start).resolve()
         while True:
             for candidate in (current, current / "genealogy"):
-                if is_genealogy_root(candidate):
+                if is_genealogy_root(candidate) and is_genealogy_checkout(candidate):
                     return candidate
             if current.parent == current:
                 break
@@ -132,8 +159,8 @@ def main() -> int:
         return 0
 
     clone = find_clone(
+        os.environ.get("GENEALOGY_REPO_DIR", ""),
         [
-            os.environ.get("GENEALOGY_REPO_DIR", ""),
             payload_cwd if isinstance(payload_cwd, str) else "",
             os.environ.get("CLAUDE_PROJECT_DIR", ""),
             os.getcwd(),
