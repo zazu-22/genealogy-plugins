@@ -9,6 +9,8 @@ A Claude Code plugin marketplace for genealogical research, integrating Gramps, 
 | **gramps-tools** | Tree maintenance, backups, data quality audits, sync verification |
 | **research-workflow** | Research planning reference material and methodology |
 | **evidence-analysis** | Source analysis, GPS-compliant proofs, Evidence Explained citations |
+| **data-sources** | NARA Catalog, WikiTree, loc.gov, BLM PLSS API skills |
+| **genealogy-governance** | Runs the genealogy repo's own governance hooks and pre-commit export guard in multi-repo cloud threads |
 
 ## Archived Plugins
 

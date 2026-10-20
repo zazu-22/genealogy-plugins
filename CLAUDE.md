@@ -9,6 +9,7 @@ This is a Claude Code plugin marketplace containing genealogy research plugins f
 - **research-workflow**: Research session management, project registry
 - **evidence-analysis**: Evidence Explained citations, GPS methodology
 - **obsidian-genealogy**: Obsidian vault integration
+- **genealogy-governance**: runs the genealogy repo's own hooks in multi-repo cloud threads
 
 ## Key Paths
 
@@ -41,6 +42,7 @@ When modifying plugins:
 | research-workflow | `plugins/research-workflow/.claude-plugin/plugin.json` | `version` |
 | evidence-analysis | `plugins/evidence-analysis/.claude-plugin/plugin.json` | `version` |
 | obsidian-genealogy | `plugins/obsidian-genealogy/.claude-plugin/plugin.json` | `version` |
+| genealogy-governance | `plugins/genealogy-governance/.claude-plugin/plugin.json` | `version` |
 
 ### When to Bump Versions
 
@@ -63,7 +65,7 @@ When modifying plugins:
    - Adding/removing plugins from the marketplace
    - Changing marketplace-level configuration
    - Making a release that includes multiple plugin updates
-4. **Before committing**: Verify version was bumped if functional changes were made
+4. **Before committing**: Verify version was bumped if functional changes were made (CI enforces this on every PR: `python3 scripts/check-version-bump.py`)
 5. **Before pushing**: Double-check version increments are staged
 
 ## Genealogy Standards

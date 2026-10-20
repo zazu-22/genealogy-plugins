@@ -1,0 +1,32 @@
+name: plugin-checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Plugin version bumps (CLAUDE.md Version Management)
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="origin/${{ github.base_ref }}"
+          else
+            base="${{ github.event.before }}"
+            if [ -z "$base" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+              # First push or force push: check the last commit only.
+              if git rev-parse -q --verify HEAD~1 >/dev/null; then base="HEAD~1"; else echo "no parent to compare"; exit 0; fi
+              echo "::warning::push base unreachable; checking HEAD~1..HEAD only"
+            fi
+          fi
+          python3 scripts/check-version-bump.py --base "$base" --head HEAD
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v

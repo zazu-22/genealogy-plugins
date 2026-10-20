@@ -1,0 +1,9 @@
+{
+  "name": "genealogy-governance",
+  "version": "0.1.0",
+  "description": "Runs the genealogy repo's own governance hooks (research-write guard, task-completion QC, subagent governance, session context) and installs its pre-commit export guard, for sessions that start above the clone",
+  "author": {
+    "name": "zazu-22"
+  },
+  "keywords": ["genealogy", "governance", "hooks", "cloud"]
+}
