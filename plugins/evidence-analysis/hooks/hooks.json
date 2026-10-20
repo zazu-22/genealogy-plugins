@@ -3,11 +3,46 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
-        "pathPattern": "**/Genealogy/**|**/*.gramps|**/Obsidian/**",
+        "matcher": "Write",
         "hooks": [
           {
             "type": "prompt",
+            "if": "Write(//**/Genealogy/**)",
+            "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
+            "timeout": 20
+          },
+          {
+            "type": "prompt",
+            "if": "Write(//**/*.gramps)",
+            "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
+            "timeout": 20
+          },
+          {
+            "type": "prompt",
+            "if": "Write(//**/Obsidian/**)",
+            "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
+            "timeout": 20
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "if": "Edit(//**/Genealogy/**)",
+            "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
+            "timeout": 20
+          },
+          {
+            "type": "prompt",
+            "if": "Edit(//**/*.gramps)",
+            "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
+            "timeout": 20
+          },
+          {
+            "type": "prompt",
+            "if": "Edit(//**/Obsidian/**)",
             "prompt": "IMPORTANT: Always return {\"ok\": true}. Never return ok:false - this hook is advisory only and must never block.\n\nCheck if this file contains genealogical source citations. If citations are present and don't follow Evidence Explained format, include a brief reminder in your response. If the file has no citations or citations look fine, just return {\"ok\": true} with no message.\n\nExamples:\n- No citations or non-genealogy content: {\"ok\": true}\n- Citations look correct: {\"ok\": true}\n- Citations need EE formatting: {\"ok\": true, \"message\": \"Consider using Evidence Explained format: [brief suggestion]\"}\n\nNever explain why you're not providing feedback. Just return ok:true silently when there's nothing to say.",
             "timeout": 20
           }
