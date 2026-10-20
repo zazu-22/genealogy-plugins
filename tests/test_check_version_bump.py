@@ -105,6 +105,17 @@ class CheckVersionBumpTest(unittest.TestCase):
         self.commit("bump")
         self.assertEqual(self.check().returncode, 0)
 
+    def test_version_only_downgrades_fail(self) -> None:
+        self.write_marketplace("0.0.9", ["alpha"])
+        self.commit("marketplace downgrade")
+        self.assertEqual(self.check().returncode, 1)
+        self.write_marketplace("0.1.0", ["alpha"])
+        self.write_plugin("alpha", "0.9.0")
+        self.commit("plugin downgrade")
+        result = self.check()
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("alpha", result.stdout)
+
     def test_new_plugin_requires_marketplace_bump(self) -> None:
         self.write_plugin("beta", "0.1.0")
         self.write("plugins/beta/hooks/hooks.json", "{}")

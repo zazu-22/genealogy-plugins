@@ -83,15 +83,14 @@ def changed_plugins(paths: list[str]) -> set[str]:
 
 
 def manifest_changed(base: str, head: str, plugin: str) -> bool:
-    """True when plugin.json changed in anything other than `version` (hooks, mcpServers, ...)."""
+    """True when plugin.json changed at all: any field (hooks, mcpServers, ...) or a version edit to check."""
     path = f"plugins/{plugin}/.claude-plugin/plugin.json"
     old, new = read_json(base, path), read_json(head, path)
     if new is None:
         return False  # plugin removed; the marketplace check covers it
     if old is None:
         return True  # new plugin; validate its first version
-    strip = lambda doc: {k: v for k, v in doc.items() if k != "version"}
-    return strip(old) != strip(new)
+    return old != new
 
 
 def version_problem(base: str, head: str, plugin: str) -> str | None:
@@ -119,10 +118,11 @@ def marketplace_problem(base: str, head: str) -> str | None:
         doc.get("metadata", {}).pop("version", None)
         return json.dumps(doc, sort_keys=True)
 
-    if config(old) == config(new):
+    old_version = old.get("metadata", {}).get("version")
+    new_version = new.get("metadata", {}).get("version")
+    if config(old) == config(new) and old_version == new_version:
         return None
-    old_v = semver(old.get("metadata", {}).get("version"))
-    new_v = semver(new.get("metadata", {}).get("version"))
+    old_v, new_v = semver(old_version), semver(new_version)
     if new_v is None or (old_v is not None and new_v <= old_v):
         return (
             f"marketplace: configuration changed but metadata.version "
