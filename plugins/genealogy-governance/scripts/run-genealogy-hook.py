@@ -20,7 +20,8 @@ Fail-open like the scripts it wraps: if no clone is found, or the clone's own
 settings.json already registers this script for the session's project
 directory (a Mac session started inside the clone), it exits 0 silently.
 
-A discovered clone must be a git checkout whose origin is zazu-22/genealogy;
+A discovered clone must be a git checkout whose origin is
+github.com/zazu-22/genealogy;
 directory markers alone are not trusted. GENEALOGY_REPO_DIR names a clone
 explicitly (a fork, or another remote) and skips that origin check.
 
@@ -40,7 +41,9 @@ import time
 from pathlib import Path
 
 INTERPRETERS = {".py": ["python3"], ".mjs": ["node"], ".js": ["node"], ".sh": ["bash"]}
-ORIGIN = re.compile(r"[:/]zazu-22/genealogy(\.git)?/?$")
+ORIGIN = re.compile(
+    r"^(?:https://github\.com/|ssh://git@github\.com/|git@github\.com:)zazu-22/genealogy(?:\.git)?/?$"
+)
 
 
 def is_genealogy_root(path: Path) -> bool:
@@ -60,14 +63,21 @@ def is_genealogy_checkout(path: Path) -> bool:
     """
     if not (path / ".git").exists():
         return False
-    try:
-        url = subprocess.run(
-            ["git", "-C", str(path), "config", "--get", "remote.origin.url"],
-            capture_output=True, text=True, check=False, timeout=5,
+
+    def git(*args: str) -> str:
+        return subprocess.run(
+            ["git", "-C", str(path), *args], capture_output=True, text=True, check=False, timeout=5
         ).stdout.strip()
+
+    try:
+        # An invalid .git makes git fall back to an enclosing repo; insist on this one.
+        toplevel = git("rev-parse", "--show-toplevel")
+        if not toplevel or Path(toplevel).resolve() != path:
+            return False
+        url = git("config", "--get", "remote.origin.url")
     except (OSError, subprocess.TimeoutExpired):
         return False
-    return bool(ORIGIN.search(url))
+    return bool(ORIGIN.fullmatch(url))
 
 
 def find_clone(override: str, starts: list[str]) -> Path | None:

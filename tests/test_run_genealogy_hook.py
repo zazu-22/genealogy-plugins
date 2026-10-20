@@ -105,7 +105,13 @@ class RunGenealogyHookTest(unittest.TestCase):
         self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(self.clone))
 
     def test_ignores_checkout_with_another_origin(self) -> None:
-        for origin in ("https://github.com/zazu-22/genealogy-plugins", "https://github.com/someone/genealogy"):
+        for origin in (
+            "https://github.com/zazu-22/genealogy-plugins",
+            "https://github.com/someone/genealogy",
+            "https://evil.example/zazu-22/genealogy.git",
+            "git@evil.example:zazu-22/genealogy",
+            "file:///tmp/zazu-22/genealogy",
+        ):
             with self.subTest(origin=origin):
                 other = Path(tempfile.mkdtemp()).resolve()
                 self.addCleanup(shutil.rmtree, other, True)
@@ -113,6 +119,22 @@ class RunGenealogyHookTest(unittest.TestCase):
                 result = self.run_wrapper("echo.py", {"cwd": str(other)}, CLAUDE_PROJECT_DIR=str(other))
                 # The decoy is passed over; the process-cwd fallback reaches the real clone.
                 self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(self.clone))
+
+    def test_accepts_ssh_origins(self) -> None:
+        for origin in ("git@github.com:zazu-22/genealogy.git", "ssh://git@github.com/zazu-22/genealogy"):
+            with self.subTest(origin=origin):
+                subprocess.run(["git", "-C", str(self.clone), "remote", "set-url", "origin", origin], check=True)
+                result = self.run_wrapper("echo.py", {"cwd": str(self.root)})
+                self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(self.clone))
+
+    def test_ignores_invalid_dot_git_inside_real_checkout(self) -> None:
+        # An empty .git dir is not a repo, so git falls back to the enclosing one, whose origin would pass.
+        nested_parent = self.clone / "vendor"
+        nested = make_clone(nested_parent, origin=None)
+        (nested / ".git").mkdir()
+        start = nested / "governance"
+        result = self.run_wrapper("echo.py", {"cwd": str(start)}, CLAUDE_PROJECT_DIR=str(start))
+        self.assertEqual(json.loads(result.stdout)["proc_cwd"], str(self.clone))
 
     def test_explicit_override_skips_origin_check(self) -> None:
         fork = Path(tempfile.mkdtemp()).resolve()

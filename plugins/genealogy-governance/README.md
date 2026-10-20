@@ -31,7 +31,8 @@ clone, which an ephemeral container discards.
   `settings.json` already registers the script (a session started inside the
   clone, as on the Mac), the wrapper does nothing.
 - **Identity, not just shape.** A discovered clone must be a git checkout
-  (its own `.git`) whose `origin` is `zazu-22/genealogy`. A directory committed
+  (its own `.git`, at its top level) whose `origin` is `github.com/zazu-22/genealogy`
+  over HTTPS or SSH. A directory committed
   inside another repo that merely looks like the clone is never run.
 - **Fail-open**, like the scripts: no clone found means exit 0 and no output.
 - **Kill switch:** `GENEALOGY_GOVERNANCE_DISABLE=1`.
